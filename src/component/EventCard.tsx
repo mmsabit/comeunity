@@ -57,7 +57,7 @@ const EventCard = ({ item }: { item: EventItem }) => {
 
         {/* Action Button */}
         <div className="mt-auto pt-2">
-          <Link href={`/allevent/${item.id}`}
+          <Link href={`/event/${item.id}`}
             className="btn btn-primary w-full"
             type="button"
           >

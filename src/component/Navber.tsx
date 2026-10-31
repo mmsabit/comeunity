@@ -47,7 +47,7 @@ const Navber = () => {
             </Link>
             <Link
               className="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors py-1"
-              href="/allevent"
+              href="/event"
             >
               All Events
             </Link>
