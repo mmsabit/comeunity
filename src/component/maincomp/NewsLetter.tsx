@@ -1,5 +1,5 @@
 
-import { MdMarkEmailRead, MdCheckCircle } from "react-icons/md";
+import { MdMarkEmailRead } from "react-icons/md";
 
 const NewsLetter = () => {
   

@@ -1,22 +1,15 @@
 import React from "react";
 import Image from "next/image";
-import {
-  MdEvent,
-  MdLocationOn,
-  MdShare,
-} from "react-icons/md";
+import { MdEvent, MdLocationOn } from "react-icons/md";
 import { EventItem } from "@/type/type";
 import { CiUser } from "react-icons/ci";
 
-
-const EventCard = ({item}:{item:EventItem}) => {
+const EventCard = ({ item }: { item: EventItem }) => {
   return (
-    <div
-      className="flex flex-col bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-all overflow-hidden group"
-    >
+    <div className="flex flex-col bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-all overflow-hidden group">
       <div className="relative h-48 w-full overflow-hidden bg-surface-container">
         <Image
-          alt={item.imageAlt}
+          alt={item.imageAlt || item.title || "Event Image"}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           height={192}
           src={item.image}
@@ -30,14 +23,10 @@ const EventCard = ({item}:{item:EventItem}) => {
             {item.category}
           </span>
         </div>
-        <div className="absolute top-3 right-3">
-        </div>
       </div>
 
       <div className="p-5 flex flex-col flex-1">
-        <div
-          className={`flex items-center gap-2 font-label-sm text-label-sm font-semibold mb-2 text-primary-container`}
-        >
+        <div className="flex items-center gap-2 font-label-sm text-label-sm font-semibold mb-2 text-primary-container">
           <MdEvent className="text-[16px]" />
           <span>{item.date}</span>
         </div>
@@ -52,10 +41,8 @@ const EventCard = ({item}:{item:EventItem}) => {
         </div>
 
         <div className="flex items-center gap-2 mb-4 pt-3 bg-surface-container-low/50 p-2.5 rounded-lg">
-          <div
-            className={`w-7 h-7 rounded-full flex items-center justify-center font-bold text-caption `}
-          >
-            <CiUser size={24} />
+          <div className="w-7 h-7 rounded-full flex items-center justify-center font-bold text-caption bg-surface-container-high text-on-surface">
+            <CiUser size={20} />
           </div>
           <div className="flex flex-col min-w-0">
             <span className="font-caption text-caption text-on-surface-variant">
@@ -67,18 +54,14 @@ const EventCard = ({item}:{item:EventItem}) => {
           </div>
         </div>
 
-        {/* Capacity Progress */}
-        <div className="mt-auto">
-          
-          <div className="flex items-center gap-2">
-            <button
-              className="flex-1 py-2.5 px-4 rounded-lg bg-primary-container hover:bg-primary text-white font-label-md text-label-md font-semibold transition-all text-center"
-              type="button"
-            >
-              Join Event
-            </button>
-            
-          </div>
+        {/* Action Button */}
+        <div className="mt-auto pt-2">
+          <button
+            className="w-full py-2.5 px-4 rounded-lg bg-primary-container hover:bg-primary text-white font-label-md text-label-md font-semibold transition-all text-center cursor-pointer shadow-sm active:scale-[0.99]"
+            type="button"
+          >
+            Join Event
+          </button>
         </div>
       </div>
     </div>

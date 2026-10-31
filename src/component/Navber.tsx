@@ -7,6 +7,7 @@ import {
   MdGroups,
   MdLogout,
 } from "react-icons/md";
+import Link from "next/link";
 
 const Navber = () => {
   return (
@@ -32,21 +33,24 @@ const Navber = () => {
             className="hidden lg:flex items-center gap-space-lg ml-space-sm"
             data-active-classes="text-primary-container font-label-md"
           >
-            <a
-              aria-current="page"
-              className="transition-colors py-1 text-primary-container font-semibold font-label-md"
-              data-path="upcoming-events"
-              href="#events-catalogue"
+            <Link
+              className="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors py-1"
+              href="/"
+            >
+              Home
+            </Link>
+            <Link
+              className="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors py-1"
+              href="/upcomingevent"
             >
               Upcoming Events
-            </a>
-            <a
+            </Link>
+            <Link
               className="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors py-1"
-              data-path="all-events"
-              href="#events-catalogue"
+              href="#"
             >
               All Events
-            </a>
+            </Link>
           </nav>
         </div>
         {/* Action CTAs & Auth Controls */}
