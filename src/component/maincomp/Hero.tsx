@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import {
   MdArrowForward,
   MdCalendarToday,
@@ -62,35 +63,22 @@ const Counter = ({
 
 const Hero = () => {
   return (
-    <section className="relative w-full overflow-hidden bg-surface-container-lowest">
+    <section className="relative w-full overflow-hidden bg-surface-container-lowest h-[85vh] flex flex-col items-center justify-center ">
       {/* Ambient micro-dot & organic gradient background decoration */}
-      <div className="absolute inset-0 pointer-events-none opacity-40">
-        <div className="absolute top-12 left-1/4 w-96 h-96 bg-primary-container/10 rounded-full blur-3xl"></div>
-        <div className="absolute top-24 right-1/4 w-md h-112 bg-secondary/5 rounded-full blur-3xl"></div>
-        <svg
-          className="absolute inset-0 w-full h-full text-outline-variant/30"
-          height="100%"
-          width="100%"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <defs>
-            <pattern
-              height="32"
-              id="civic-grid-dots"
-              patternUnits="userSpaceOnUse"
-              width="32"
-            >
-              <circle cx="2" cy="2" fill="currentColor" r="1.5"></circle>
-            </pattern>
-          </defs>
-          <rect fill="url(#civic-grid-dots)" height="100%" width="100%"></rect>
-        </svg>
+      <div className="absolute inset-0 pointer-events-none">
+        <Image
+          src="https://i.pinimg.com/736x/e5/f4/4f/e5f44f7c7e2f57a91a71982eb3ddafdd.jpg"
+          alt="bannerImage"
+          fill
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.63)_0%,rgba(255,255,255,1)_70%)]"></div>
       </div>
 
       <div className="relative max-w-7xl mx-auto px-margin  py-16 lg:p-25">
-        <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
+        <div className="flex flex-col items-center justify-center  text-center max-w-4xl mx-auto">
           {/* Primary Display Headline */}
-          <h1 className="font-display-hero text-display-hero text-on-surface tracking-tight max-w-4xl">
+          <h1 className="font-display-hero text-display-hero text-on-surface tracking-tight max-w-4xl font-semibold">
             Unite for Change. Organize and Join Local Community Events That
             Matter.
           </h1>

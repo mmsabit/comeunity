@@ -9,7 +9,7 @@ const EventCard = ({ item }: { item: EventItem }) => {
     <div className="flex flex-col bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-all overflow-hidden group">
       <div className="relative h-48 w-full overflow-hidden bg-surface-container">
         <Image
-          alt={item.imageAlt || item.title || "Event Image"}
+          alt={item.title || "Event Image"}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           height={192}
           src={item.image}

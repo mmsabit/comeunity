@@ -53,7 +53,7 @@ const Gallery = async() => {
                             key={index}
                           >
                             <Image
-                              alt={item.imageAlt}
+                              alt={item.title}
                               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                               height={288}
                               src={item.image}
