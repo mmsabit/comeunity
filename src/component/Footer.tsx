@@ -3,7 +3,7 @@ import { MdGroups, MdForum, MdCampaign, MdTerminal } from 'react-icons/md';
 
 const Footer = () => {
     return (
-        <footer className="w-full bg-surface-container-lowest shadow-[0_-1px_8px_rgba(0,0,0,0.02)] mt-space-xl">
+        <footer className="w-full bg-surface-container shadow-[0_-1px_8px_rgba(0,0,0,0.02)]">
         <div className="max-w-7xl mx-auto px-margin py-space-xl">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-space-lg pb-space-lg">
             <div className="lg:col-span-2 pr-0 lg:pr-space-lg">

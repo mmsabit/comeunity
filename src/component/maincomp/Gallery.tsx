@@ -29,7 +29,7 @@ const Gallery = async() => {
     const res = await fetch('http://localhost:5000/events');
     const GALLERY_ITEMS = await res.json();
     return (
-        <section className="w-full py-space-xl bg-surface" id="impact-stories">
+        <section className="w-full py-16 lg:p-25 bg-surface" id="impact-stories">
                     <div className="max-w-7xl mx-auto px-margin">
                       {/* Section Header */}
                       <div className="text-center max-w-3xl mx-auto mb-space-lg">

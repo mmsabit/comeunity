@@ -87,7 +87,7 @@ const Hero = () => {
         </svg>
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-margin  py-22 lg:py-24">
+      <div className="relative max-w-7xl mx-auto px-margin  py-16 lg:p-25">
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
           {/* Primary Display Headline */}
           <h1 className="font-display-hero text-display-hero text-on-surface tracking-tight max-w-4xl">
