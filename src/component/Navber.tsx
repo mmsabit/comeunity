@@ -109,14 +109,14 @@ const Navber = () => {
                 </div>
 
                 <div className="py-1 flex flex-col gap-0.5">
-                  <a
+                  <Link
                     className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-label-md text-label-md transition-colors"
                     data-path="create-event"
-                    href="#"
+                    href="/new_event"
                   >
                     <MdAdd className="text-primary-container text-[20px]" />
                     <span>Create Event</span>
-                  </a>
+                  </Link>
                   <Link
                     className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-label-md text-label-md transition-colors"
                     data-path="manage-events"
