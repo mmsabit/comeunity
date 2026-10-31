@@ -64,16 +64,15 @@ const Navber = () => {
             {/* Logged Out Slot */}
 
             <div className="flex items-center gap-2" id="logged-out-slot">
-              <a
-                className="font-label-md text-label-md text-on-surface-variant hover:text-on-surface px-3 py-2 rounded-lg transition-colors"
-                data-path="login"
-                href="#"
+              <Link
+                className="btn btn-ghost"
+                href="signin"
               >
                 Sign In
-              </a>
+              </Link>
               <a
-                className="font-label-md text-label-md bg-primary-container text-white hover:bg-primary px-4 py-2 rounded-lg transition-all font-semibold shadow-[0_1px_3px_0_rgba(0,0,0,0.04)]"
-                data-path="login"
+                className="btn btn-primary"
+                
                 href="#"
               >
                 Join Us

@@ -30,6 +30,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      data-theme="light"
       className={`${plusJakartaSans.variable} ${jetbrainsMono.variable}`}
     >
       <body className="bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col">
