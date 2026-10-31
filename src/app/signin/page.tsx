@@ -3,8 +3,8 @@ import Link from "next/link";
 const SignInPage = () => {
   return (
     <div className="max-w-7xl mx-auto my-20">
-      <div className="flex flex-col h-screen items-center justify-center">
-        <div className="border-base-300 rounded-box w-120 border p-6 bg-white">
+      <div className="flex flex-col h-[90vh] items-center justify-center">
+        <div className="border-base-300 rounded-box w-120 border p-6 bg-white shadow-sm">
           <h2 className="text-center text-2xl font-semibold mb-2">
             Sign in to your account
           </h2>
@@ -60,7 +60,7 @@ const SignInPage = () => {
           <div className="my-5 text-center">
             <p className="text-sm">Don&apos;t have a Account yet? 
                 <Link
-                href={"/"}
+                href={"/signup"}
                 className="font-semibold text-primary ms-1 hover:underline"
                 >
                     Create an Account

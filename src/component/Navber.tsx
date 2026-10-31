@@ -66,14 +66,14 @@ const Navber = () => {
             <div className="flex items-center gap-2" id="logged-out-slot">
               <Link
                 className="btn btn-ghost"
-                href="signin"
+                href="/signin"
               >
                 Sign In
               </Link>
               <a
                 className="btn btn-primary"
                 
-                href="#"
+                href="/signup"
               >
                 Join Us
               </a>
@@ -81,14 +81,13 @@ const Navber = () => {
 
             {/* Logged In Slot */}
             <div
-              className="relative group flex items-center"
-              id="logged-in-slot"
+              className="dropdown dropdown-hover"
+              
             >
               <div
-                aria-expanded="false"
-                aria-haspopup="true"
+                tabIndex={0} role="button"
                 className="relative flex items-center cursor-pointer p-0.5 rounded-full hover:ring-2 hover:ring-primary-container/20 transition-all"
-                tabIndex={0}
+                
               >
                 <Image
                   alt="Profile"
@@ -100,7 +99,7 @@ const Navber = () => {
               </div>
 
               {/* Profile Dropdown */}
-              <div className="absolute right-0 top-full mt-2 w-64 bg-surface-container-lowest rounded-xl shadow-[0_20px_25px_-5px_rgba(0,0,0,0.07),0_8px_10px_-6px_rgba(0,0,0,0.04)] p-space-sm hidden group-hover:block hover:block focus-within:block z-50 animate-in fade-in slide-in-from-top-1">
+              <div tabIndex={-1} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm right-0" >
                 <div className="px-3 py-2.5 bg-surface-container-low rounded-lg mb-space-xs">
                   <p className="font-label-md text-label-md text-on-surface font-semibold truncate">
                     Sarah Jenkins

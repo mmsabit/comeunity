@@ -3,6 +3,7 @@ import Image from "next/image";
 import { MdEvent, MdLocationOn } from "react-icons/md";
 import { EventItem } from "@/type/type";
 import { CiUser } from "react-icons/ci";
+import Link from "next/link";
 
 const EventCard = ({ item }: { item: EventItem }) => {
   return (
@@ -56,12 +57,12 @@ const EventCard = ({ item }: { item: EventItem }) => {
 
         {/* Action Button */}
         <div className="mt-auto pt-2">
-          <button
-            className="w-full py-2.5 px-4 rounded-lg bg-primary-container hover:bg-primary text-white font-label-md text-label-md font-semibold transition-all text-center cursor-pointer shadow-sm active:scale-[0.99]"
+          <Link href={`/allevent/${item.id}`}
+            className="btn btn-primary w-full"
             type="button"
           >
             Join Event
-          </button>
+          </Link>
         </div>
       </div>
     </div>
