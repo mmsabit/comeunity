@@ -59,7 +59,6 @@ const Navber = () => {
             className="relative flex items-center gap-space-sm"
             id="auth-view-container"
           >
-            {/* Demo Toggle Button */}
 
             {/* Logged Out Slot */}
 
@@ -118,14 +117,14 @@ const Navber = () => {
                     <MdAdd className="text-primary-container text-[20px]" />
                     <span>Create Event</span>
                   </a>
-                  <a
+                  <Link
                     className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-label-md text-label-md transition-colors"
                     data-path="manage-events"
-                    href="#"
+                    href="/myevent"
                   >
                     <MdCalendarMonth className="text-on-surface-variant text-[20px]" />
                     <span>Manage Events</span>
-                  </a>
+                  </Link>
                   <a
                     className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-label-md text-label-md transition-colors"
                     data-path="joined-events"
