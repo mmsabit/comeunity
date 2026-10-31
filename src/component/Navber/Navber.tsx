@@ -8,6 +8,7 @@ import {
   MdLogout,
 } from "react-icons/md";
 import Link from "next/link";
+import Navlink from "./Navlink";
 
 const Navber = () => {
   return (
@@ -29,29 +30,7 @@ const Navber = () => {
           </a>
         </div>
         <div className="flex items-center">
-          <nav
-            className="hidden lg:flex items-center gap-space-lg ml-space-sm"
-            data-active-classes="text-primary-container font-label-md"
-          >
-            <Link
-              className="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors py-1"
-              href="/"
-            >
-              Home
-            </Link>
-            <Link
-              className="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors py-1"
-              href="/upcomingevent"
-            >
-              Upcoming Events
-            </Link>
-            <Link
-              className="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors py-1"
-              href="/event"
-            >
-              All Events
-            </Link>
-          </nav>
+          <Navlink/>
         </div>
         {/* Action CTAs & Auth Controls */}
         <div className="flex items-center">
@@ -125,14 +104,14 @@ const Navber = () => {
                     <MdCalendarMonth className="text-on-surface-variant text-[20px]" />
                     <span>Manage Events</span>
                   </Link>
-                  <a
+                  <Link
                     className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-label-md text-label-md transition-colors"
                     data-path="joined-events"
-                    href="#"
+                    href="/joined_event"
                   >
                     <MdConfirmationNumber className="text-on-surface-variant text-[20px]" />
                     <span>Joined Events</span>
-                  </a>
+                  </Link>
                 </div>
 
                 <div className="my-1.5 h-px bg-surface-container-high"></div>

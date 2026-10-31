@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import Navber from "@/component/Navber";
+import Navber from "@/component/Navber/Navber";
 import Footer from "@/component/Footer";
 
 const plusJakartaSans = Plus_Jakarta_Sans({

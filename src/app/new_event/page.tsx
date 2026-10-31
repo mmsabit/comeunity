@@ -1,8 +1,24 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect, useRef } from 'react';
+import flatpickr from 'flatpickr';
+import 'flatpickr/dist/flatpickr.min.css';
 import { IoMdAddCircleOutline } from 'react-icons/io';
 import { MdOutlineTextFields, MdOutlineLocalOffer, MdOutlineCalendarToday, MdOutlineLocationOn, MdOutlineImage } from 'react-icons/md';
 
 const NewEvent = () => {
+  const dateRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (dateRef.current) {
+      flatpickr(dateRef.current, {
+        dateFormat: 'F j, Y',       // e.g. October 31, 2026
+        minDate: 'today',            // today and future only
+        disableMobile: true,         // always show flatpickr, not native picker
+        allowInput: false,
+      });
+    }
+  }, []);
   return (
     <div className="min-h-screen flex items-center justify-center flex-col bg-slate-50 text-slate-800">
 
@@ -91,12 +107,14 @@ const NewEvent = () => {
                       <MdOutlineCalendarToday className="w-4 h-4" />
                     </div>
                     <input
-                      className="block w-full pl-10 pr-3 py-2.5 text-sm text-slate-800 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-primary-container focus:ring-2 focus:ring-primary-container/20"
+                      ref={dateRef}
+                      className="block w-full pl-10 pr-3 py-2.5 text-sm text-slate-800 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 cursor-pointer"
                       id="eventDate"
-                      min="2025-01-01"
                       name="eventDate"
+                      placeholder="October 31, 2026"
                       required
-                      type="date"
+                      readOnly
+                      type="text"
                     />
                   </div>
                   
