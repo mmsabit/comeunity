@@ -3,11 +3,28 @@
 import React, { useState, useMemo } from "react";
 import EventCard from "@/component/EventCard";
 import { EventItem } from "@/type/type";
-import { MdSearch, MdClose, MdSearchOff, MdFilterList } from "react-icons/md";
+import {
+  MdSearch,
+  MdClose,
+  MdSearchOff,
+  MdFilterList,
+  MdSort,
+} from "react-icons/md";
 
 interface UpcComingEventProps {
   events: EventItem[];
 }
+
+// Helper to reliably parse various date strings into timestamps
+const parseEventDate = (dateStr?: string): number => {
+  if (!dateStr) return 0;
+  const clean = dateStr.split("•")[0].trim();
+  const date = new Date(clean);
+  const time = date.getTime();
+  if (!isNaN(time)) return time;
+  const fallback = Date.parse(clean);
+  return !isNaN(fallback) ? fallback : 0;
+};
 
 const UpcComingEvent: React.FC<UpcComingEventProps> = ({ events }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -32,24 +49,29 @@ const UpcComingEvent: React.FC<UpcComingEventProps> = ({ events }) => {
     return counts;
   }, [events]);
 
-  // Filter events based on active category & search query
+  // Filter events based on active category & search query, then sort earliest to latest
   const filteredEvents = useMemo(() => {
-    return events.filter((item) => {
-      const matchesCategory =
-        selectedCategory === "All" ||
-        item.category?.toLowerCase() === selectedCategory.toLowerCase();
+    return events
+      .filter((item) => {
+        const matchesCategory =
+          selectedCategory === "All" ||
+          item.category?.toLowerCase() === selectedCategory.toLowerCase();
 
-      const q = searchQuery.toLowerCase().trim();
-      const matchesSearch =
-        !q ||
-        item.title?.toLowerCase().includes(q) ||
-        item.location?.toLowerCase().includes(q) ||
-        item.category?.toLowerCase().includes(q) ||
-        item.organizerName?.toLowerCase().includes(q) ||
-        item.date?.toLowerCase().includes(q);
+        const q = searchQuery.toLowerCase().trim();
+        const matchesSearch =
+          !q ||
+          item.title?.toLowerCase().includes(q) ||
+          item.location?.toLowerCase().includes(q) ||
+          item.category?.toLowerCase().includes(q) ||
+          item.organizerName?.toLowerCase().includes(q) ||
+          item.date?.toLowerCase().includes(q);
 
-      return matchesCategory && matchesSearch;
-    });
+        return matchesCategory && matchesSearch;
+      })
+      .sort((a, b) => {
+        // Sort earliest date to latest date
+        return parseEventDate(a.date) - parseEventDate(b.date);
+      });
   }, [events, selectedCategory, searchQuery]);
 
   const handleResetFilters = () => {
@@ -84,12 +106,18 @@ const UpcComingEvent: React.FC<UpcComingEventProps> = ({ events }) => {
           )}
         </div>
 
-        {/* Counter Info */}
-        <div className="flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm self-start sm:self-center">
-          <span className="font-semibold text-on-surface">
-            {filteredEvents.length}
-          </span>
-          <span>of {events.length} initiatives</span>
+        {/* Counter Info & Sort Status Badge */}
+        <div className="flex items-center gap-3 text-on-surface-variant font-label-sm text-label-sm self-start sm:self-center">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface-container text-on-surface-variant font-medium text-caption">
+            <MdSort className="text-[16px] text-primary-container" />
+            <span>Sorted: Earliest to Latest</span>
+          </div>
+          <div>
+            <span className="font-semibold text-on-surface">
+              {filteredEvents.length}
+            </span>
+            <span> of {events.length} initiatives</span>
+          </div>
         </div>
       </div>
 
