@@ -5,6 +5,8 @@ import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import { IoMdAddCircleOutline } from 'react-icons/io';
 import { MdOutlineTextFields, MdOutlineLocalOffer, MdOutlineCalendarToday, MdOutlineLocationOn, MdOutlineImage } from 'react-icons/md';
+import { authClient } from '@/lib/auth-client';
+import { toast, Bounce } from 'react-toastify';
 
 const NewEvent = () => {
   const dateRef = useRef<HTMLInputElement>(null);
@@ -19,6 +21,65 @@ const NewEvent = () => {
       });
     }
   }, []);
+
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Capture the form element before any `await` — React nullifies e.currentTarget after async suspension
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const eventData = Object.fromEntries(formData.entries()) as Record<string, string>;
+
+    // Validate that the date field is filled (flatpickr readOnly inputs bypass HTML required)
+    const requiredFields: { key: string; label: string }[] = [
+      { key: 'eventTitle', label: 'Event Title' },
+      { key: 'eventDate', label: 'Event Date' },
+      { key: 'eventLocation', label: 'Location / Venue' },
+      { key: 'thumbnailUrl', label: 'Thumbnail Image URL' },
+      { key: 'eventDescription', label: 'Event Description' },
+    ];
+
+    for (const field of requiredFields) {
+      if (!eventData[field.key]?.trim()) {
+        toast.error(`${field.label} is required.`, {
+          position: 'bottom-right',
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          theme: 'light',
+          transition: Bounce,
+        });
+        return;
+      }
+    }
+
+    const res = await fetch('http://localhost:3200/events',{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(eventData),
+    });
+
+    if (res.ok) {
+      toast.success('Event created successfully!', {
+        position: 'bottom-right',
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'light',
+        transition: Bounce,
+      });
+      form.reset();
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center flex-col bg-slate-50 text-slate-800">
 
@@ -38,7 +99,7 @@ const NewEvent = () => {
 
           {/* Form Card */}
           <div className="bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition-shadow p-6 sm:p-8">
-            <form className="space-y-6" id="create-event-form">
+            <form className="space-y-6" id="create-event-form" onSubmit={handleSubmit}>
 
               {/* Event Title */}
               <div>
@@ -90,6 +151,8 @@ const NewEvent = () => {
                       <option value="Neighborhood Cleanup">Neighborhood Cleanup</option>
                       <option value="Winter Clothes">Winter Clothes</option>
                       <option value="Youth Mentoring">Youth Mentoring</option>
+                      <option value="Blood Donation">Blood Donation</option>
+                      <option value="Others">Others</option>
                     </select>
                   </div>
                 </div>
@@ -185,6 +248,10 @@ const NewEvent = () => {
                 />
               </div>
 
+              <input type="hidden" name="organizerName" value={user?.name ?? ''} />
+              <input type="hidden" name="organizerEmail" value={user?.email ?? ''} />
+              <input type="hidden" name="organizerImage" value={user?.image ?? ''} />
+              <input type="hidden" name="organizerId" value={user?.id ?? ''} />
               {/* Submit Button */}
               <div className="pt-2">
                 <button

@@ -8,7 +8,6 @@ import {
   MdClose,
   MdSearchOff,
   MdFilterList,
-  MdSort,
 } from "react-icons/md";
 
 interface UpcComingEventProps {
@@ -108,10 +107,7 @@ const UpcComingEvent: React.FC<UpcComingEventProps> = ({ events }) => {
 
         {/* Counter Info & Sort Status Badge */}
         <div className="flex items-center gap-3 text-on-surface-variant font-label-sm text-label-sm self-start sm:self-center">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface-container text-on-surface-variant font-medium text-caption">
-            <MdSort className="text-[16px] text-primary-container" />
-            <span>Sorted: Earliest to Latest</span>
-          </div>
+          
           <div>
             <span className="font-semibold text-on-surface">
               {filteredEvents.length}

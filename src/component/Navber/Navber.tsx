@@ -5,6 +5,7 @@ import {
 
 import Navlink from "./Navlink";
 import Navbtn from "./Navbtn";
+import Link from "next/link";
 
 const Navber = () => {
   return (
@@ -12,10 +13,10 @@ const Navber = () => {
       <div className="h-20 max-w-7xl mx-auto px-margin flex items-center justify-between gap-space-md">
         {/* Logo & Main Nav */}
         <div className="flex items-center">
-          <a
+          <Link
             className="flex items-center gap-space-xs focus:outline-none focus:ring-2 focus:ring-primary rounded-lg"
             data-path="upcoming-events"
-            href="#"
+            href="/"
           >
             <div className="w-8 h-8 rounded-lg bg-primary-container text-white flex items-center justify-center shadow-sm">
               <MdGroups className="text-[20px]" />
@@ -23,7 +24,7 @@ const Navber = () => {
             <span className="font-headline-sm text-headline-sm text-on-surface tracking-tight font-bold ml-1.5">
               CommUnity
             </span>
-          </a>
+          </Link>
         </div>
         <div className="flex items-center">
           <Navlink/>
