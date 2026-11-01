@@ -51,7 +51,7 @@ const EditEvent = ({ event }: { event: EventItem }) => {
         setSuccess(true);
         // Close the modal after a short delay
         setTimeout(() => {
-          (document.getElementById("my_modal_2") as HTMLDialogElement)?.close();
+          (document.getElementById("Edit-modal") as HTMLDialogElement)?.close();
           setSuccess(false);
         }, 1200);
         router.refresh();
@@ -69,14 +69,14 @@ const EditEvent = ({ event }: { event: EventItem }) => {
         className="btn btn-primary btn-outline w-1/2"
         onClick={() =>
           (
-            document.getElementById("my_modal_2") as HTMLDialogElement
+            document.getElementById("Edit-modal") as HTMLDialogElement
           )?.showModal()
         }
       >
         <RiEdit2Fill /> Edit Event
       </button>
 
-      <dialog ref={dialogRef} id="my_modal_2" className="modal">
+      <dialog ref={dialogRef} id="Edit-modal" className="modal">
         <div className="modal-box max-w-2xl">
           {/* Close (cross) button */}
           <form method="dialog">

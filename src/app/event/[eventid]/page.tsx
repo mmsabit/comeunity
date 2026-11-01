@@ -119,7 +119,7 @@ const EventDetailesPage = async ({
                 </button>
                 <div className="flex justify-center items-center mt-5 w-auto gap-2">
                   <EditEvent event={event} />
-                  <DeleteEvent />
+                  <DeleteEvent event={event} />
                 </div>
               </div>
             </aside>
