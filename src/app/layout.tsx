@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navber from "@/component/Navber/Navber";
 import Footer from "@/component/Footer";
+import { ToastContainer} from 'react-toastify';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta-sans",
@@ -38,6 +39,7 @@ export default function RootLayout({
         <main className="w-full bg-surface min-h-[calc(100vh-80px)]">{children}</main>
         
         <Footer/>
+        <ToastContainer />
       </body>   
     </html>
   );
