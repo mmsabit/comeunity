@@ -87,6 +87,26 @@ const SignUpPage = () => {
     setShowpassword(!showPassword);
   };
 
+  const GoogleSignIn = async () => {
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
+
+    if (data) {
+      toast.success("Successfully signed up with Google", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+  };
+
   return (
     <div className="max-w-7xl mx-auto my-20">
       <div className="flex flex-col h-[90vh] items-center justify-center">
@@ -98,7 +118,7 @@ const SignUpPage = () => {
             Choose how you would like to participate and get fully registered in
             under two minutes.
           </p>
-          <button className="btn bg-white text-black border-[#e5e5e5] w-full">
+          <button className="btn bg-white text-black border-[#e5e5e5] w-full" onClick={GoogleSignIn}>
             <svg
               aria-label="Google logo"
               width="16"

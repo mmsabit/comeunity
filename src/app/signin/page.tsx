@@ -58,6 +58,25 @@ const SignInPage = () => {
     }
   }
 
+  const GoogleSignIn = async () => {
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
+
+    if (data) {
+      toast.success("Successfully signed in with Google", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+  };
   return (
     <div className="max-w-7xl mx-auto my-20">
       <div className="flex flex-col h-[90vh] items-center justify-center">
@@ -68,7 +87,7 @@ const SignInPage = () => {
           <p className="text-center  text-[12px] mb-4">
             Manage your Social Event, coordinate projects, and Geather People.
           </p>
-          <button className="btn bg-white text-black border-[#e5e5e5] w-full">
+          <button className="btn bg-white text-black border-[#e5e5e5] w-full" onClick={GoogleSignIn}>
             <svg
               aria-label="Google logo"
               width="16"
