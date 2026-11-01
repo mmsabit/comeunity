@@ -1,32 +1,12 @@
+import { EventItem } from '@/type/type';
 import Image from 'next/image';
 import React from 'react';
 import { MdPhotoCamera, MdLocationOn, } from 'react-icons/md';
 
-interface EventItem {
-  id: number;
-  title: string;
-  category: string;
-  categoryStyle: string;
-  badgeTextColor?: string;
-  date: string;
-  dateColor: string;
-  location: string;
-  organizerInitials: string;
-  organizerBg: string;
-  organizerTextColor?: string;
-  organizerName: string;
-  organizerRole: string;
-  spotsLabel: string;
-  spotsFilled: string;
-  spotsPercent: number;
-  progressColor: string;
-  image: string;
-  imageAlt: string;
-  filterType: "all" | "weekend" | "environment";
-}
+
 
 const Gallery = async() => {
-    const res = await fetch('http://localhost:5000/events');
+    const res = await fetch('http://localhost:3200/events');
     const GALLERY_ITEMS = await res.json();
     return (
         <section className="w-full py-16 lg:p-25 bg-surface" id="impact-stories">
@@ -53,24 +33,24 @@ const Gallery = async() => {
                             key={index}
                           >
                             <Image
-                              alt={item.title}
+                              alt={item.eventTitle}
                               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                               height={288}
-                              src={item.image}
+                              src={item.thumbnailUrl}
                               width={400}
                               unoptimized
                             />
                             <div className="absolute inset-0 bg-linear-to-t from-inverse-surface/90 via-inverse-surface/30 to-transparent opacity-90 group-hover:opacity-95 transition-opacity flex flex-col justify-end p-5 text-inverse-on-surface">
                               <span className={`font-label-sm text-label-sm font-bold`}>
-                                {item.category}
+                                {item.eventType}
                               </span>
                               <p className="font-title-md text-title-md font-bold text-surface-container-lowest mt-0.5">
-                                {item.title}
+                                {item.eventTitle}
                               </p>
                               <div className="flex items-center justify-between text-caption font-caption text-surface-dim mt-2">
                                 <span className="flex items-center gap-1">
                                   <MdLocationOn className="text-[14px]" />
-                                  {item.location}
+                                  {item.eventLocation}
                                 </span>
                                 
                               </div>

@@ -7,6 +7,8 @@ import { FaLocationDot, FaUserGroup } from "react-icons/fa6";
 import { MdArrowForward } from "react-icons/md";
 import EditEvent from "./EditEvent";
 import DeleteEvent from "./DeleteEvent";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 const EventDetailesPage = async ({
   params,
@@ -16,6 +18,10 @@ const EventDetailesPage = async ({
   const { eventid } = await params;
   const res = await fetch(`http://localhost:3200/events/${eventid}`);
   const event: EventItem = await res.json();
+
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
   return (
     <div className="flex flex-col w-full">
@@ -117,10 +123,13 @@ const EventDetailesPage = async ({
                   <span>Join this Event</span>
                   <MdArrowForward className="text-[20px]" />
                 </button>
-                <div className="flex justify-center items-center mt-5 w-auto gap-2">
-                  <EditEvent event={event} />
-                  <DeleteEvent event={event} />
-                </div>
+
+                {session?.user?.id === event.organizerId && (
+                  <div className="flex justify-center items-center mt-5 w-auto gap-2">
+                    <EditEvent event={event} />
+                    <DeleteEvent event={event} />
+                  </div>
+                )}
               </div>
             </aside>
           </div>
