@@ -145,14 +145,14 @@ const NewEvent = () => {
                       name="eventType"
                       required
                     >
-                      <option value="Food Drive">Food Drive</option>
-                      <option value="Blanket Relief">Blanket Relief</option>
-                      <option value="Tree Plantation">Tree Plantation</option>
-                      <option value="Neighborhood Cleanup">Neighborhood Cleanup</option>
-                      <option value="Winter Clothes">Winter Clothes</option>
-                      <option value="Youth Mentoring">Youth Mentoring</option>
-                      <option value="Blood Donation">Blood Donation</option>
-                      <option value="Others">Others</option>
+                      <option value="food drive">Food Drive</option>
+                      <option value="blanket relief">Blanket Relief</option>
+                      <option value="tree plantation">Tree Plantation</option>
+                      <option value="neighborhood cleanup">Neighborhood Cleanup</option>
+                      <option value="winter clothes">Winter Clothes</option>
+                      <option value="youth mentoring">Youth Mentoring</option>
+                      <option value="blood donation">Blood Donation</option>
+                      <option value="others">Others</option>
                     </select>
                   </div>
                 </div>

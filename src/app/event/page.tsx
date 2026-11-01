@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 const AllEventsPage = async () => {
-  const res = await fetch("http://localhost:5000/events", {
+  const res = await fetch("http://localhost:3200/events", {
     cache: "no-store",
   });
   const events = await res.json();

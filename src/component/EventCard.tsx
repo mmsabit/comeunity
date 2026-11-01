@@ -10,10 +10,10 @@ const EventCard = ({ item }: { item: EventItem }) => {
     <div className="flex flex-col bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-all overflow-hidden group">
       <div className="relative h-48 w-full overflow-hidden bg-surface-container">
         <Image
-          alt={item.title || "Event Image"}
+          alt={item.eventTitle || "Event Image"}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           height={192}
-          src={item.image}
+          src={item.thumbnailUrl}
           width={400}
           unoptimized
         />
@@ -21,7 +21,7 @@ const EventCard = ({ item }: { item: EventItem }) => {
           <span
             className={`px-3 py-1 rounded-full font-label-sm text-label-sm font-bold shadow-sm bg-primary-container text-white`}
           >
-            {item.category}
+            {item.eventType}
           </span>
         </div>
       </div>
@@ -29,21 +29,32 @@ const EventCard = ({ item }: { item: EventItem }) => {
       <div className="p-5 flex flex-col flex-1">
         <div className="flex items-center gap-2 font-label-sm text-label-sm font-semibold mb-2 text-primary-container">
           <MdEvent className="text-[16px]" />
-          <span>{item.date}</span>
+          <span>{item.eventDate}</span>
         </div>
 
         <h3 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary-container transition-colors line-clamp-2 mb-2 font-bold">
-          {item.title}
+          {item.eventTitle}
         </h3>
 
         <div className="flex items-center gap-1.5 text-on-surface-variant font-body-sm text-body-sm mb-4">
           <MdLocationOn className="text-[18px] text-outline shrink-0" />
-          <span className="truncate">{item.location}</span>
+          <span className="truncate">{item.eventLocation}</span>
         </div>
 
         <div className="flex items-center gap-2 mb-4 pt-3 bg-surface-container-low/50 p-2.5 rounded-lg">
           <div className="w-7 h-7 rounded-full flex items-center justify-center font-bold text-caption bg-surface-container-high text-on-surface">
-            <CiUser size={20} />
+            {item.organizerImage ? (
+              <Image
+                alt={item.organizerName || "Organizer Image"}
+                className="w-full h-full object-cover rounded-full"
+                height={28}
+                src={item.organizerImage}
+                width={28}
+                unoptimized
+              />
+            ) : (
+              <CiUser className="text-[20px]" />
+            )}
           </div>
           <div className="flex flex-col min-w-0">
             <span className="font-caption text-caption text-on-surface-variant">
@@ -57,7 +68,7 @@ const EventCard = ({ item }: { item: EventItem }) => {
 
         {/* Action Button */}
         <div className="mt-auto pt-2">
-          <Link href={`/event/${item.id}`}
+          <Link href={`/event/${item._id}`}
             className="btn btn-primary w-full"
             type="button"
           >

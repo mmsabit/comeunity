@@ -10,21 +10,11 @@ export const metadata: Metadata = {
     "Explore and join hands-on upcoming community events, cleanups, drives, and civic initiatives happening today and in the upcoming days.",
 };
 
-const parseEventDate = (dateStr: string): Date | null => {
-  if (!dateStr) return null;
-  // Remove time segments like "• 09:00 AM - 01:00 PM"
-  const cleanDateStr = dateStr.split("•")[0].trim();
-  const date = new Date(cleanDateStr);
-  if (!isNaN(date.getTime())) {
-    return date;
-  }
-  const timestamp = Date.parse(cleanDateStr);
-  return isNaN(timestamp) ? null : new Date(timestamp);
-};
+
 
 const getUpcomingEvents = async (): Promise<EventItem[]> => {
   try {
-    const res = await fetch("http://localhost:5000/events", {
+    const res = await fetch("http://localhost:3200/events", {
       cache: "no-store",
     });
     if (!res.ok) {
@@ -41,7 +31,7 @@ const getUpcomingEvents = async (): Promise<EventItem[]> => {
     // Filter for today and all following future dates
     return allEvents
       .filter((event) => {
-        const eventDate = parseEventDate(event.date);
+        const eventDate = event.eventDate ? new Date(event.eventDate) : null;
         if (!eventDate) return false;
 
         // End of the event's day (23:59:59.999)
@@ -51,8 +41,8 @@ const getUpcomingEvents = async (): Promise<EventItem[]> => {
         return eventDayEnd >= today;
       })
       .sort((a, b) => {
-        const dateA = parseEventDate(a.date)?.getTime() || 0;
-        const dateB = parseEventDate(b.date)?.getTime() || 0;
+        const dateA = a.eventDate ? new Date(a.eventDate).getTime() : 0;
+        const dateB = b.eventDate ? new Date(b.eventDate).getTime() : 0;
         return dateA - dateB;
       });
   } catch (error) {

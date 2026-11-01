@@ -1,11 +1,13 @@
 export interface EventItem {
-  id: string | number;
-  title: string;
-  category: string;
-  date: string;
-  location: string;
+  _id: string;
+  eventTitle: string;
+  eventType: string;
+  eventDate: string;
+  eventLocation: string;
+  thumbnailUrl: string;
+  eventDescription: string;
   organizerName: string;
-  image: string;
-  description: string;
-
+  organizerEmail: string;
+  organizerImage: string;
+  organizerId: string;
 }

@@ -29,20 +29,25 @@ const AllEvent: React.FC<AllEventProps> = ({ events }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  // Dynamically extract all available categories
+  // Dynamically extract all available categories (normalized to avoid casing duplicates)
   const categories = useMemo(() => {
-    const unique = Array.from(
-      new Set(events.map((e) => e.category).filter(Boolean))
-    );
-    return ["All", ...unique];
+    const seen = new Map<string, string>(); // lowercase → original display form
+    events.forEach((e) => {
+      if (e.eventType) {
+        const key = e.eventType.trim().toLowerCase();
+        if (!seen.has(key)) seen.set(key, e.eventType.trim());
+      }
+    });
+    return ["All", ...Array.from(seen.values())];
   }, [events]);
 
-  // Compute category item counts for badges
+  // Compute category item counts for badges (case-insensitive keyed by lowercase)
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = { All: events.length };
     events.forEach((e) => {
-      if (e.category) {
-        counts[e.category] = (counts[e.category] || 0) + 1;
+      if (e.eventType) {
+        const key = e.eventType.trim().toLowerCase();
+        counts[key] = (counts[key] || 0) + 1;
       }
     });
     return counts;
@@ -54,22 +59,22 @@ const AllEvent: React.FC<AllEventProps> = ({ events }) => {
       .filter((item) => {
         const matchesCategory =
           selectedCategory === "All" ||
-          item.category?.toLowerCase() === selectedCategory.toLowerCase();
+          item.eventType?.toLowerCase() === selectedCategory.toLowerCase();
 
         const q = searchQuery.toLowerCase().trim();
         const matchesSearch =
           !q ||
-          item.title?.toLowerCase().includes(q) ||
-          item.location?.toLowerCase().includes(q) ||
-          item.category?.toLowerCase().includes(q) ||
+          item.eventTitle?.toLowerCase().includes(q) ||
+          item.eventLocation?.toLowerCase().includes(q) ||
+          item.eventType?.toLowerCase().includes(q) ||
           item.organizerName?.toLowerCase().includes(q) ||
-          item.date?.toLowerCase().includes(q);
+          item.eventDate?.toLowerCase().includes(q);
 
         return matchesCategory && matchesSearch;
       })
       .sort((a, b) => {
         // Sort latest to earliest
-        return parseEventDate(b.date) - parseEventDate(a.date);
+        return parseEventDate(b.eventDate) - parseEventDate(a.eventDate);
       });
   }, [events, selectedCategory, searchQuery]);
 
@@ -125,7 +130,8 @@ const AllEvent: React.FC<AllEventProps> = ({ events }) => {
         </span>
         {categories.map((category) => {
           const isActive = selectedCategory === category;
-          const count = categoryCounts[category] ?? 0;
+          const countKey = category === "All" ? "All" : category.toLowerCase();
+          const count = categoryCounts[countKey] ?? 0;
 
           return (
             <button
@@ -200,7 +206,7 @@ const AllEvent: React.FC<AllEventProps> = ({ events }) => {
           id="events-grid"
         >
           {filteredEvents.map((item) => (
-            <EventCard item={item} key={item.id} />
+            <EventCard item={item} key={item._id} />
           ))}
         </div>
       ) : (

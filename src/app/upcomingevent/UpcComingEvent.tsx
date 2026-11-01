@@ -32,7 +32,7 @@ const UpcComingEvent: React.FC<UpcComingEventProps> = ({ events }) => {
   // Dynamically extract all available categories
   const categories = useMemo(() => {
     const unique = Array.from(
-      new Set(events.map((e) => e.category).filter(Boolean))
+      new Set(events.map((e) => e.eventType).filter(Boolean))
     );
     return ["All", ...unique];
   }, [events]);
@@ -41,8 +41,8 @@ const UpcComingEvent: React.FC<UpcComingEventProps> = ({ events }) => {
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = { All: events.length };
     events.forEach((e) => {
-      if (e.category) {
-        counts[e.category] = (counts[e.category] || 0) + 1;
+      if (e.eventType) {
+        counts[e.eventType] = (counts[e.eventType] || 0) + 1;
       }
     });
     return counts;
@@ -54,22 +54,22 @@ const UpcComingEvent: React.FC<UpcComingEventProps> = ({ events }) => {
       .filter((item) => {
         const matchesCategory =
           selectedCategory === "All" ||
-          item.category?.toLowerCase() === selectedCategory.toLowerCase();
+          item.eventType?.toLowerCase() === selectedCategory.toLowerCase();
 
         const q = searchQuery.toLowerCase().trim();
         const matchesSearch =
           !q ||
-          item.title?.toLowerCase().includes(q) ||
-          item.location?.toLowerCase().includes(q) ||
-          item.category?.toLowerCase().includes(q) ||
+          item.eventTitle?.toLowerCase().includes(q) ||
+          item.eventLocation?.toLowerCase().includes(q) ||
+          item.eventType?.toLowerCase().includes(q) ||
           item.organizerName?.toLowerCase().includes(q) ||
-          item.date?.toLowerCase().includes(q);
+          item.eventDate?.toLowerCase().includes(q);
 
         return matchesCategory && matchesSearch;
       })
       .sort((a, b) => {
         // Sort earliest date to latest date
-        return parseEventDate(a.date) - parseEventDate(b.date);
+        return parseEventDate(a.eventDate) - parseEventDate(b.eventDate);
       });
   }, [events, selectedCategory, searchQuery]);
 
@@ -200,7 +200,7 @@ const UpcComingEvent: React.FC<UpcComingEventProps> = ({ events }) => {
           id="events-grid"
         >
           {filteredEvents.map((item) => (
-            <EventCard item={item} key={item.id} />
+            <EventCard item={item} key={item._id} />
           ))}
         </div>
       ) : (
