@@ -4,6 +4,7 @@ import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import React, { useState } from "react";
+import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { MdCheckCircle, MdCancel } from "react-icons/md";
 import { toast, Bounce } from "react-toastify";
 
@@ -27,57 +28,63 @@ const SignUpPage = () => {
     if (allValid) {
       const formData = new FormData(e.currentTarget);
       const user = Object.fromEntries(formData.entries()) as Record<
-      string,
-      string
-    >;;
+        string,
+        string
+      >;
       const { data, error } = await authClient.signUp.email({
-      name: user.user_name,
-      email: user.user_email,
-      password: user.user_password,
-      image: user.user_photo,
-      callbackURL: "/",
-    });
-
-    if (data) {
-      toast.success("Successfully signed up!", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
+        name: user.user_name,
+        email: user.user_email,
+        password: user.user_password,
+        image: user.user_photo,
+        callbackURL: "/",
       });
-      redirect("/");
-    }
 
-    if (error) {
-      toast.error(error.message, {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
-    }
+      if (data) {
+        toast.success("Successfully signed up!", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+        redirect("/");
+      }
+
+      if (error) {
+        toast.error(error.message, {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+      }
     }
     toast.error("Please enter valid information", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+  };
+
+  const [showPassword, setShowpassword] = useState(false);
+
+  const handleShow = () => {
+    setShowpassword(!showPassword);
   };
 
   return (
@@ -154,26 +161,38 @@ const SignUpPage = () => {
                 name="user_photo"
                 required
               />
-
-              <label className="text-sm">Password</label>
-              <input
-                type="password"
-                className={`input mb-1 w-full transition-colors ${
-                  password.length === 0
-                    ? ""
-                    : allValid
-                      ? "border-green-500 focus:border-green-500"
-                      : "border-rose-400 focus:border-rose-400"
-                }`}
-                placeholder="Password"
-                value={password}
-                name="user_password"
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+              <div className="relative">
+                <label className="text-sm">Password</label>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  className={`input mb-1 w-full transition-colors  ${
+                    password.length === 0
+                      ? ""
+                      : allValid
+                        ? "border-green-500 focus:border-green-500"
+                        : "border-rose-400 focus:border-rose-400"
+                  }`}
+                  placeholder="Password"
+                  value={password}
+                  name="user_password"
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <button
+                  className="absolute right-3 top-8 cursor-pointer"
+                  onClick={handleShow}
+                  type="button"
+                >
+                  {showPassword ? (
+                    <FaEyeSlash size={17} />
+                  ) : (
+                    <FaEye size={17} />
+                  )}
+                </button>
+              </div>
 
               {/* Live Password Validation Rules */}
-              {(
+              {
                 <ul className="mb-3 mt-1 space-y-1 rounded-lg bg-slate-50 border border-slate-200 p-3">
                   {rules.map((rule) => (
                     <li
@@ -195,12 +214,9 @@ const SignUpPage = () => {
                     </li>
                   ))}
                 </ul>
-              )}
+              }
 
-              <button
-                className="btn btn-primary mt-4"
-                type="submit"
-              >
+              <button className="btn btn-primary mt-4" type="submit">
                 Sign up
               </button>
             </fieldset>
