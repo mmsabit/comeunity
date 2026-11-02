@@ -58,7 +58,6 @@ const UpcComingEvents = async () => {
         {/* Header Section */}
         <div className="mb-10">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-50 border border-brand-100/80 text-brand-700 text-xs font-bold uppercase tracking-wider mb-3">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
             <span>Happening Today &amp; Upcoming Days</span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold text-slate-900 tracking-tight">

@@ -3,7 +3,13 @@ import { EventRegistration } from "@/type/type";
 import { useRouter } from "next/navigation";
 import { Bounce, toast } from "react-toastify";
 
-const JoinCancle = ({ joindata }: { joindata: EventRegistration }) => {
+const JoinCancle = ({
+  joindata,
+  isEventPassed,
+}: {
+  joindata: EventRegistration;
+  isEventPassed: boolean;
+}) => {
   const router = useRouter();
 
   const handleCancleJoin = async () => {
@@ -39,10 +45,16 @@ const JoinCancle = ({ joindata }: { joindata: EventRegistration }) => {
   return (
     <>
       <button
-        className="w-full inline-flex items-center justify-center py-3.5 px-6 rounded-xl border border-brand-600 text-brand-600 hover:bg-brand-50 font-semibold text-sm transition-colors cursor-pointer"
+        className={`w-full inline-flex items-center justify-center py-3.5 px-6 rounded-xl font-semibold text-sm transition-colors ${
+          isEventPassed
+            ? "border border-slate-200 bg-slate-100 text-slate-400 cursor-not-allowed"
+            : "border border-brand-600 text-brand-600 hover:bg-brand-50 cursor-pointer"
+        }`}
         id="rsvp-submit-btn"
         type="button"
+        disabled={isEventPassed}
         onClick={() =>
+          !isEventPassed &&
           (
             document.getElementById(
               "JoinCancleModal"
@@ -50,7 +62,7 @@ const JoinCancle = ({ joindata }: { joindata: EventRegistration }) => {
           )?.showModal()
         }
       >
-        <span>Joined • Click to Cancel</span>
+        <span>{isEventPassed ? "Event Ended • Attended" : "Joined • Click to Cancel"}</span>
       </button>
 
       <dialog id="JoinCancleModal" className="modal backdrop-blur-xs">

@@ -179,6 +179,7 @@ const EventDetailesPage = async ({
                 <div className="w-full">
                   <JoinValidation
                     event={event}
+                    isEventPassed={isEventPassed}
                     user={
                       session?.user
                         ? { id: session.user.id, name: session.user.name }

@@ -8,9 +8,11 @@ import { toast, Bounce } from "react-toastify";
 const JoinBtn = ({
   event,
   user,
+  isEventPassed,
 }: {
   event: EventItem;
   user: { id: string; name: string } | null;
+  isEventPassed: boolean;
 }) => {
   const router = useRouter();
   const joinerdata = {
@@ -62,12 +64,17 @@ const JoinBtn = ({
   return (
     <button
       onClick={handleJoinEvent}
-      className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-linear-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 text-white font-semibold text-sm transition-all shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer"
+      disabled={isEventPassed}
+      className={`w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl font-semibold text-sm transition-all shadow-md focus:outline-none focus:ring-2 focus:ring-brand-500 ${
+        isEventPassed
+          ? "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none"
+          : "bg-linear-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 text-white hover:shadow-lg cursor-pointer"
+      }`}
       id="rsvp-submit-btn"
       type="button"
     >
-      <span>Join this Event</span>
-      <MdArrowForward className="text-lg" />
+      <span>{isEventPassed ? "Event Ended" : "Join this Event"}</span>
+      {!isEventPassed && <MdArrowForward className="text-lg" />}
     </button>
   );
 };

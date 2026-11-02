@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 type CounterProps = {
@@ -81,9 +82,9 @@ const Hero = () => {
 
           {/* Primary CTA */}
           <div className="mt-8 flex justify-center">
-            <a
+            <Link
               className="group inline-flex items-center gap-2.5 px-8 py-4 rounded-xl bg-linear-to-r from-brand-600 to-indigo-600 text-white font-semibold text-base shadow-lg shadow-brand-600/25 hover:shadow-xl hover:shadow-brand-600/35 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
-              href="#upcoming"
+              href="/upcomingevent"
             >
               <span>Explore Upcoming Events</span>
               <svg
@@ -99,7 +100,7 @@ const Hero = () => {
                   strokeWidth="2.2"
                 />
               </svg>
-            </a>
+            </Link>
           </div>
         </div>
 

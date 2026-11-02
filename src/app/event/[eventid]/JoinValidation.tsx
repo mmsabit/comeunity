@@ -6,9 +6,11 @@ import JoinCancle from "./JoinCancle";
 const JoinValidation = async ({
   event,
   user,
+  isEventPassed,
 }: {
   event: EventItem;
   user: { id: string; name: string } | null;
+  isEventPassed: boolean;
 }) => {
 
   let joinRecord: EventRegistration | null = null;
@@ -24,9 +26,9 @@ const JoinValidation = async ({
   return (
     <>
       {joinRecord ? (
-        <JoinCancle joindata={joinRecord} />
+        <JoinCancle joindata={joinRecord} isEventPassed={isEventPassed} />
       ) : (
-        <JoinBtn event={event} user={user} />
+        <JoinBtn event={event} user={user} isEventPassed={isEventPassed} />
       )}
       
     </>
