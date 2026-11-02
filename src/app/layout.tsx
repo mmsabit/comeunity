@@ -34,7 +34,7 @@ export default function RootLayout({
       data-theme="light"
       className={`scroll-smooth ${plusJakartaSans.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="bg-[#fafbff] text-slate-900 antialiased selection:bg-brand-500 selection:text-white min-h-screen flex flex-col font-sans">
+      <body className="bg-surface text-slate-900 antialiased selection:bg-brand-500 selection:text-white min-h-screen flex flex-col font-sans">
         <Navber />
         <main className="w-full flex-1">{children}</main>
         <Footer />

@@ -22,10 +22,10 @@ const Navlink = () => {
         return (
           <Link
             key={item.href}
-            className={`transition-colors py-1 ${
+            className={`transition-colors py-1 hover:text-primary ${
               isActive
-                ? "text-brand-600 font-semibold relative after:absolute after:-bottom-1.5 after:left-0 after:w-full after:h-0.5 after:bg-brand-600 after:rounded-full"
-                : "hover:text-slate-900"
+                ? "text-primary font-semibold relative after:absolute after:-bottom-1.5 after:left-0 after:w-full after:h-0.5 after:bg-primary after:rounded-full"
+                : ""
             }`}
             href={item.href}
           >

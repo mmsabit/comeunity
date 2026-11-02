@@ -56,7 +56,7 @@ const Counter = ({
 const Hero = () => {
   return (
     <section
-      className="relative pt-12 pb-24 lg:pt-16 lg:pb-32 overflow-hidden hero-mesh "
+      className="relative pt-12 pb-24 lg:pt-32 lg:pb-32 overflow-hidden hero-mesh "
       data-purpose="hero-section"
     >
       <div className="absolute inset-0 pointer-events-none overflow-hidden">

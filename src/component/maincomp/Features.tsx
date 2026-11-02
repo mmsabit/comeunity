@@ -2,7 +2,7 @@ import React from "react";
 
 const Features = () => {
   return (
-    <section className="py-20 lg:py-28 bg-[#fafbff]" data-purpose="features-section">
+    <section className="py-20 lg:py-28 bg-surface" data-purpose="features-section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl">
