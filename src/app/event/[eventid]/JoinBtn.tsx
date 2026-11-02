@@ -1,6 +1,7 @@
 'use client';
 
 import { EventItem } from "@/type/type";
+import { useRouter } from "next/navigation";
 import { MdArrowForward } from "react-icons/md";
 import { toast, Bounce } from "react-toastify";
 
@@ -11,11 +12,15 @@ const JoinBtn = ({
   event: EventItem;
   user: { id: string; name: string } | null;
 }) => {
-  const data = {
+  const router = useRouter();
+  const joinerdata = {
     joinerId: user?.id,
     joinerName: user?.name,
-    ...event,
   };
+
+  const eventdata = {
+    ...event,
+  }
 
   const handleJoinEvent = async () => {
     const res = await fetch(`http://localhost:3200/event-joins`, {
@@ -24,7 +29,8 @@ const JoinBtn = ({
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        data,
+        joinerdata,
+        eventdata,
       }),
     });
     if (res.ok) {
@@ -40,6 +46,7 @@ const JoinBtn = ({
         transition: Bounce,
       });
     }
+    router.refresh();
   };
 
   return (

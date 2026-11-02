@@ -11,3 +11,15 @@ export interface EventItem {
   organizerImage: string;
   organizerId: string;
 }
+
+export interface JoinerData {
+  joinerId: string;
+  joinerName: string;
+}
+
+
+export interface EventRegistration {
+  _id: string;
+  joinerdata: JoinerData;
+  eventdata: EventItem;
+}

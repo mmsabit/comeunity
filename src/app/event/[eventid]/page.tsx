@@ -7,7 +7,7 @@ import EditEvent from "./EditEvent";
 import DeleteEvent from "./DeleteEvent";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import JoinBtn from "./JoinBtn";
+import JoinValidation from "./JoinValidation";
 
 const EventDetailesPage = async ({
   params,
@@ -114,7 +114,7 @@ const EventDetailesPage = async ({
                   </div>
                 </div>
 
-                <JoinBtn
+                <JoinValidation
                   event={event}
                   user={
                     session?.user
