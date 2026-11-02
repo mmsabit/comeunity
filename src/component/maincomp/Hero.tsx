@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 
 type CounterProps = {
   target: number;
@@ -57,18 +56,11 @@ const Counter = ({
 const Hero = () => {
   return (
     <section
-      className="relative pt-12 pb-24 lg:pt-16 lg:pb-32 overflow-hidden hero-mesh border-b border-slate-100"
+      className="relative pt-12 pb-24 lg:pt-16 lg:pb-32 overflow-hidden hero-mesh "
       data-purpose="hero-section"
     >
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <Image
-          src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=1920&q=80"
-          alt="CommUnity volunteers outdoors"
-          fill
-          priority
-          className="w-full h-full object-cover object-center opacity-25"
-          unoptimized
-        />
+        
         <div className="absolute inset-0 bg-linear-to-b from-surface/70 via-surface/85 to-surface"></div>
       </div>
 
@@ -113,12 +105,12 @@ const Hero = () => {
 
         {/* Metric Stat Bar Docked Card */}
         <div className="mt-14 max-w-5xl mx-auto" data-purpose="stat-bar">
-          <div className="bg-white/90 backdrop-blur-md rounded-2xl p-4 sm:p-6 lg:p-7 border border-slate-200/80 shadow-subtle grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 divide-y sm:divide-y-0 sm:divide-x divide-slate-100">
+          <div className="bg-white/90 backdrop-blur-md rounded-2xl p-4 sm:p-6 lg:p-7 border border-slate-200/80 shadow-subtle grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             {/* Metric 1 */}
-            <div className="flex items-center gap-4 pt-3 sm:pt-0 sm:px-4">
-              <div className="w-12 h-12 rounded-xl bg-indigo-50 border border-indigo-100/80 flex items-center justify-center text-brand-600 shrink-0">
+            <div className="flex items-center gap-3 sm:gap-4 sm:px-2">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-indigo-50 border border-indigo-100/80 flex items-center justify-center text-brand-600 shrink-0">
                 <svg
-                  className="w-6 h-6"
+                  className="w-5 h-5 sm:w-6 sm:h-6"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
@@ -131,21 +123,21 @@ const Hero = () => {
                   />
                 </svg>
               </div>
-              <div>
-                <p className="text-2xl font-bold tracking-tight text-slate-900">
+              <div className="min-w-0">
+                <p className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
                   <Counter target={1240} suffix="+" />
                 </p>
-                <p className="text-xs sm:text-sm font-medium text-slate-500 mt-0.5">
+                <p className="text-xs sm:text-sm font-medium text-slate-500 mt-0.5 truncate">
                   Active Events
                 </p>
               </div>
             </div>
 
             {/* Metric 2 */}
-            <div className="flex items-center gap-4 pt-4 sm:pt-0 sm:px-4">
-              <div className="w-12 h-12 rounded-xl bg-rose-50 border border-rose-100/80 flex items-center justify-center text-rose-500 shrink-0">
+            <div className="flex items-center gap-3 sm:gap-4 sm:px-2">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-rose-50 border border-rose-100/80 flex items-center justify-center text-rose-500 shrink-0">
                 <svg
-                  className="w-6 h-6"
+                  className="w-5 h-5 sm:w-6 sm:h-6"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
@@ -158,21 +150,21 @@ const Hero = () => {
                   />
                 </svg>
               </div>
-              <div>
-                <p className="text-2xl font-bold tracking-tight text-slate-900">
+              <div className="min-w-0">
+                <p className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
                   <Counter target={48.5} decimals={1} suffix="K" />
                 </p>
-                <p className="text-xs sm:text-sm font-medium text-slate-500 mt-0.5">
+                <p className="text-xs sm:text-sm font-medium text-slate-500 mt-0.5 truncate">
                   Volunteers Engaged
                 </p>
               </div>
             </div>
 
             {/* Metric 3 */}
-            <div className="flex items-center gap-4 pt-4 sm:pt-0 sm:px-4">
-              <div className="w-12 h-12 rounded-xl bg-amber-50 border border-amber-100/80 flex items-center justify-center text-amber-600 shrink-0">
+            <div className="flex items-center gap-3 sm:gap-4 sm:px-2">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-amber-50 border border-amber-100/80 flex items-center justify-center text-amber-600 shrink-0">
                 <svg
-                  className="w-6 h-6"
+                  className="w-5 h-5 sm:w-6 sm:h-6"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
@@ -185,21 +177,21 @@ const Hero = () => {
                   />
                 </svg>
               </div>
-              <div>
-                <p className="text-2xl font-bold tracking-tight text-slate-900">
+              <div className="min-w-0">
+                <p className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
                   <Counter target={180} suffix="+" />
                 </p>
-                <p className="text-xs sm:text-sm font-medium text-slate-500 mt-0.5">
+                <p className="text-xs sm:text-sm font-medium text-slate-500 mt-0.5 truncate">
                   Neighborhoods Served
                 </p>
               </div>
             </div>
 
             {/* Metric 4 */}
-            <div className="flex items-center gap-4 pt-4 sm:pt-0 sm:px-4">
-              <div className="w-12 h-12 rounded-xl bg-violet-50 border border-violet-100/80 flex items-center justify-center text-violet-600 shrink-0">
+            <div className="flex items-center gap-3 sm:gap-4 sm:px-2">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-violet-50 border border-violet-100/80 flex items-center justify-center text-violet-600 shrink-0">
                 <svg
-                  className="w-6 h-6"
+                  className="w-5 h-5 sm:w-6 sm:h-6"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
@@ -212,11 +204,11 @@ const Hero = () => {
                   />
                 </svg>
               </div>
-              <div>
-                <p className="text-2xl font-bold tracking-tight text-slate-900">
+              <div className="min-w-0">
+                <p className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
                   <Counter target={2.4} decimals={1} prefix="$" suffix="M" />
                 </p>
-                <p className="text-xs sm:text-sm font-medium text-slate-500 mt-0.5">
+                <p className="text-xs sm:text-sm font-medium text-slate-500 mt-0.5 truncate">
                   Social Value Generated
                 </p>
               </div>

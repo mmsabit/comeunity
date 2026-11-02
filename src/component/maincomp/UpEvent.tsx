@@ -3,6 +3,16 @@ import EventCard from "../EventCard";
 import { EventItem } from "@/type/type";
 import Link from "next/link";
 
+// Helper to reliably parse various date strings into Date objects
+const parseEventDate = (dateStr?: string): Date | null => {
+  if (!dateStr) return null;
+  const clean = dateStr.split("•")[0].trim();
+  const date = new Date(clean);
+  if (!isNaN(date.getTime())) return date;
+  const fallback = Date.parse(clean);
+  return !isNaN(fallback) ? new Date(fallback) : null;
+};
+
 const UpEvent = async () => {
   let Events: EventItem[] = [];
   try {
@@ -16,8 +26,28 @@ const UpEvent = async () => {
     console.error("Failed to load events in UpEvent:", err);
   }
 
-  // Display top 6 events
-  const displayEvents = Events.slice(0, 6);
+  // Start of today (00:00:00.000)
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Filter for today and following days, sort earliest first, and display top 6
+  const displayEvents = Events
+    .filter((event) => {
+      const eventDate = parseEventDate(event.eventDate);
+      if (!eventDate) return false;
+
+      // End of the event's day (23:59:59.999) so today's events remain visible throughout today
+      const eventDayEnd = new Date(eventDate);
+      eventDayEnd.setHours(23, 59, 59, 999);
+
+      return eventDayEnd >= today;
+    })
+    .sort((a, b) => {
+      const timeA = parseEventDate(a.eventDate)?.getTime() ?? Number.MAX_SAFE_INTEGER;
+      const timeB = parseEventDate(b.eventDate)?.getTime() ?? Number.MAX_SAFE_INTEGER;
+      return timeA - timeB;
+    })
+    .slice(0, 6);
 
   return (
     <section
@@ -37,14 +67,22 @@ const UpEvent = async () => {
         </div>
 
         {/* Event Cards Grid */}
-        <div
-          className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          id="events-grid"
-        >
-          {displayEvents.map((item: EventItem) => (
-            <EventCard item={item} key={item._id} />
-          ))}
-        </div>
+        {displayEvents.length > 0 ? (
+          <div
+            className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            id="events-grid"
+          >
+            {displayEvents.map((item: EventItem) => (
+              <EventCard item={item} key={item._id} />
+            ))}
+          </div>
+        ) : (
+          <div className="mt-12 py-12 text-center text-slate-500 bg-slate-50 rounded-2xl border border-slate-100">
+            <p className="text-base font-medium">
+              No upcoming events scheduled at the moment. Please check back soon!
+            </p>
+          </div>
+        )}
 
         {/* View All Button */}
         <div className="mt-14 flex justify-center">

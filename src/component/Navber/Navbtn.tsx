@@ -3,7 +3,7 @@
 import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
   MdAdd,
   MdCalendarMonth,
@@ -13,6 +13,8 @@ import {
 import { toast, Bounce } from "react-toastify";
 
 const Navbtn = () => {
+  const router = useRouter();
+
   const handleSignOut = async () => {
     await authClient.signOut();
     toast.success("Successfully signed out", {
@@ -26,7 +28,7 @@ const Navbtn = () => {
       theme: "light",
       transition: Bounce,
     });
-    redirect("/signin");
+    router.push("/signin");
   };
 
   const { data: session } = authClient.useSession();
@@ -42,18 +44,17 @@ const Navbtn = () => {
         >
           <Image
             alt={user.name || "User avatar profile"}
-            className="h-10 w-10 rounded-full object-cover ring-2 ring-white shadow-sm"
-            height={40}
+            className="h-9 w-9 sm:h-10 sm:w-10 rounded-full object-cover ring-2 ring-white shadow-sm"
+            height={100}
             src={user.image || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80"}
-            width={40}
+            width={100}
             unoptimized
           />
-          <span className="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full ring-2 ring-white bg-emerald-500"></span>
         </div>
 
         <div
           tabIndex={-1}
-          className="dropdown-content menu bg-white rounded-2xl z-50 w-60 p-3 shadow-card border border-slate-200/80 mt-2"
+          className="dropdown-content menu bg-white rounded-2xl z-50 w-60 p-3 shadow-card border border-slate-200/80"
         >
           <div className="px-3.5 py-3 bg-slate-50 border border-slate-100 rounded-xl mb-2">
             <p className="text-sm font-bold text-slate-900 truncate">
@@ -114,15 +115,15 @@ const Navbtn = () => {
   }
 
   return (
-    <div className="flex items-center gap-2.5">
+    <div className="flex items-center gap-2 sm:gap-2.5">
       <Link
-        className="px-4 py-2 text-sm font-semibold text-slate-700 hover:text-slate-900 hover:bg-slate-100/70 rounded-xl transition-colors"
+        className="hidden sm:inline-flex px-3.5 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-slate-700 hover:text-slate-900 hover:bg-slate-100/70 rounded-xl transition-colors"
         href="/signin"
       >
         Sign In
       </Link>
       <Link
-        className="inline-flex items-center justify-center px-4.5 py-2 text-sm font-semibold text-white bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 rounded-xl shadow-sm hover:shadow transition-all"
+        className="items-center justify-center px-3.5 sm:px-4.5 py-2 text-xs sm:text-sm font-semibold text-white bg-linear-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 rounded-xl shadow-sm hover:shadow transition-all whitespace-nowrap hidden sm:inline-flex"
         href="/signup"
       >
         Join Us

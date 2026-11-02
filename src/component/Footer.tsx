@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
 
 const Footer = () => {
   return (
@@ -39,51 +40,28 @@ const Footer = () => {
                 className="p-2 rounded-lg bg-white border border-slate-200 hover:text-brand-600 hover:border-brand-200 transition-colors"
                 href="#"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                  />
-                </svg>
+                <FaFacebookF />
               </a>
               <a
                 aria-label="Announcements"
                 className="p-2 rounded-lg bg-white border border-slate-200 hover:text-brand-600 hover:border-brand-200 transition-colors"
                 href="#"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                  />
-                </svg>
+                <FaXTwitter />
               </a>
               <a
                 aria-label="Members"
                 className="p-2 rounded-lg bg-white border border-slate-200 hover:text-brand-600 hover:border-brand-200 transition-colors"
                 href="#"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                  />
-                </svg>
+                <FaInstagram />
               </a>
               <a
                 aria-label="LinkedIn"
                 className="p-2 rounded-lg bg-white border border-slate-200 hover:text-brand-600 hover:border-brand-200 transition-colors"
                 href="#"
               >
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
-                </svg>
+                <FaLinkedinIn />
               </a>
             </div>
           </div>
@@ -192,32 +170,12 @@ const Footer = () => {
         </div>
 
         {/* Bottom Meta Bar */}
-        <div className="mt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-medium">
+        <div className="mt-8 flex flex-col md:flex-row items-center justify-center gap-4 text-xs text-slate-500 font-medium">
           <div>
-            <p>© 2025 CommUnity Platform Inc. All rights reserved.</p>
+            <p>© 2026 CommUnity Platform Inc. All rights reserved.</p>
           </div>
-          {/* System Status */}
-          <div className="flex items-center gap-2">
-            <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>MongoDB Atlas Sync Active • 99.98% Uptime</span>
-          </div>
-          {/* Language Selector */}
-          <div className="flex items-center gap-1.5 cursor-pointer hover:text-slate-900">
-            <span>English (US)</span>
-            <svg
-              className="w-3.5 h-3.5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M19 9l-7 7-7-7"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-              />
-            </svg>
-          </div>
+          
+          
         </div>
       </div>
     </footer>
