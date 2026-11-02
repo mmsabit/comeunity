@@ -1,47 +1,72 @@
 import React from "react";
-import { MdChevronRight } from "react-icons/md";
 import EventCard from "../EventCard";
 import { EventItem } from "@/type/type";
+import Link from "next/link";
 
 const UpEvent = async () => {
-  const res = await fetch("http://localhost:3200/events");
-  const Events = await res.json();
+  let Events: EventItem[] = [];
+  try {
+    const res = await fetch("http://localhost:3200/events", {
+      next: { revalidate: 60 },
+    });
+    if (res.ok) {
+      Events = await res.json();
+    }
+  } catch (err) {
+    console.error("Failed to load events in UpEvent:", err);
+  }
+
+  // Display top 6 events
+  const displayEvents = Events.slice(0, 6);
+
   return (
-    <section className="w-full py-16 lg:p-25 bg-white" id="events-catalogue">
-      <div className="max-w-7xl mx-auto px-margin">
-        {/* Section Title & Mongo Atlas Query Indicator */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-space-md">
-          <div>
-            <h2 className="font-headline-lg text-headline-lg text-on-surface tracking-tight">
-              Upcoming Community Initiatives
-            </h2>
-            <p className="mt-1 font-body-md text-body-md text-on-surface-variant">
-              Discover immediate hands-on opportunities in your district.
-              Reserve your volunteer spot today.
-            </p>
-          </div>
+    <section
+      className="py-20 lg:py-28 bg-white border-y border-slate-100"
+      data-purpose="upcoming-events-section"
+      id="upcoming"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="max-w-3xl">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            Upcoming Community Initiatives
+          </h2>
+          <p className="mt-3 text-base sm:text-lg text-slate-600 font-normal">
+            Discover immediate hands-on opportunities in your district. Reserve your volunteer spot today.
+          </p>
         </div>
 
         {/* Event Cards Grid */}
         <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-space-md"
+          className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           id="events-grid"
         >
-          {Events.map((item: EventItem) => (
+          {displayEvents.map((item: EventItem) => (
             <EventCard item={item} key={item._id} />
           ))}
         </div>
 
-        {/* Bottom View All CTA */}
-        <div className="mt-12 text-center">
-          <a
-            className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-lg bg-surface-container-lowest text-on-surface font-label-md text-label-md font-semibold shadow-sm hover:shadow hover:bg-surface-container transition-all"
-            data-path="all-events"
-            href="#"
+        {/* View All Button */}
+        <div className="mt-14 flex justify-center">
+          <Link
+            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-sm shadow-sm transition-all duration-200 hover:border-slate-400"
+            href="/upcomingevent"
           >
-            <span>View All 140+ Upcoming Events</span>
-            <MdChevronRight className="text-primary-container text-[20px]" />
-          </a>
+            <span>View All Upcoming Events</span>
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M9 5l7 7-7 7"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+              />
+            </svg>
+          </Link>
         </div>
       </div>
     </section>

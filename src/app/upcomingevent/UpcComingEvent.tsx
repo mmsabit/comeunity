@@ -84,10 +84,10 @@ const UpcComingEvent: React.FC<UpcComingEventProps> = ({ events }) => {
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
         {/* Search Input */}
         <div className="relative flex-1 max-w-lg">
-          <MdSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[20px] text-outline pointer-events-none" />
+          <MdSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-xl text-slate-400 pointer-events-none" />
           <input
             aria-label="Search initiatives"
-            className="w-full pl-10 pr-10 py-2.5 bg-surface-container-lowest text-on-surface placeholder:text-outline font-body-sm text-body-sm rounded-xl border border-outline-variant/30 focus:outline-none focus:ring-2 focus:ring-primary-container shadow-sm transition-all"
+            className="w-full pl-10 pr-10 py-3 bg-white text-slate-800 placeholder:text-slate-400 text-sm rounded-xl border border-slate-200/80 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 shadow-subtle transition-all"
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by title, location, organizer..."
             type="text"
@@ -96,31 +96,30 @@ const UpcComingEvent: React.FC<UpcComingEventProps> = ({ events }) => {
           {searchQuery && (
             <button
               aria-label="Clear search"
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-outline hover:text-on-surface transition-colors cursor-pointer"
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-700 transition-colors cursor-pointer"
               onClick={() => setSearchQuery("")}
               type="button"
             >
-              <MdClose className="text-[18px]" />
+              <MdClose className="text-lg" />
             </button>
           )}
         </div>
 
         {/* Counter Info & Sort Status Badge */}
-        <div className="flex items-center gap-3 text-on-surface-variant font-label-sm text-label-sm self-start sm:self-center">
-          
+        <div className="flex items-center gap-3 text-slate-500 text-sm self-start sm:self-center font-medium">
           <div>
-            <span className="font-semibold text-on-surface">
+            <span className="font-bold text-slate-900">
               {filteredEvents.length}
             </span>
-            <span> of {events.length} initiatives</span>
+            <span> of {events.length} upcoming</span>
           </div>
         </div>
       </div>
 
       {/* Category Filter Pills */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-        <span className="hidden sm:inline-flex items-center gap-1 text-on-surface-variant font-label-sm text-label-sm mr-1 shrink-0">
-          <MdFilterList className="text-[18px]" />
+        <span className="hidden sm:inline-flex items-center gap-1 text-slate-500 text-sm mr-1 shrink-0 font-medium">
+          <MdFilterList className="text-lg" />
           <span>Category:</span>
         </span>
         {categories.map((category) => {
@@ -129,21 +128,21 @@ const UpcComingEvent: React.FC<UpcComingEventProps> = ({ events }) => {
 
           return (
             <button
-              className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full font-label-sm text-label-sm font-semibold transition-all whitespace-nowrap cursor-pointer ${
+              className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all whitespace-nowrap cursor-pointer ${
                 isActive
-                  ? "bg-primary-container text-white shadow-sm"
-                  : "bg-surface-container-lowest text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low border border-outline-variant/30"
+                  ? "bg-brand-600 text-white shadow-sm"
+                  : "bg-white text-slate-600 hover:text-slate-900 hover:bg-slate-50 border border-slate-200/80 shadow-xs"
               }`}
               key={category}
               onClick={() => setSelectedCategory(category)}
               type="button"
             >
-              <span>{category}</span>
+              <span className="capitalize">{category}</span>
               <span
                 className={`text-[11px] px-1.5 py-0.2 rounded-full ${
                   isActive
                     ? "bg-white/20 text-white"
-                    : "bg-surface-container text-on-surface-variant"
+                    : "bg-slate-100 text-slate-600"
                 }`}
               >
                 {count}
@@ -155,36 +154,36 @@ const UpcComingEvent: React.FC<UpcComingEventProps> = ({ events }) => {
 
       {/* Active Filter Indicator Tag (if filtered) */}
       {(selectedCategory !== "All" || searchQuery) && (
-        <div className="flex flex-wrap items-center gap-2 text-caption font-caption text-on-surface-variant">
+        <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
           <span>Active filters:</span>
           {selectedCategory !== "All" && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-container text-on-surface">
-              Category: <strong className="font-semibold">{selectedCategory}</strong>
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800">
+              Category: <strong className="font-semibold capitalize">{selectedCategory}</strong>
               <button
                 aria-label="Remove category filter"
-                className="hover:text-error ml-0.5 cursor-pointer"
+                className="hover:text-rose-600 ml-0.5 cursor-pointer"
                 onClick={() => setSelectedCategory("All")}
                 type="button"
               >
-                <MdClose className="text-[14px]" />
+                <MdClose className="text-sm" />
               </button>
             </span>
           )}
           {searchQuery && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-container text-on-surface">
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800">
               Query: <strong className="font-semibold">&quot;{searchQuery}&quot;</strong>
               <button
                 aria-label="Remove search query"
-                className="hover:text-error ml-0.5 cursor-pointer"
+                className="hover:text-rose-600 ml-0.5 cursor-pointer"
                 onClick={() => setSearchQuery("")}
                 type="button"
               >
-                <MdClose className="text-[14px]" />
+                <MdClose className="text-sm" />
               </button>
             </span>
           )}
           <button
-            className="text-primary-container hover:underline ml-1 font-semibold cursor-pointer"
+            className="text-brand-600 hover:underline ml-1 font-semibold cursor-pointer"
             onClick={handleResetFilters}
             type="button"
           >
@@ -196,7 +195,7 @@ const UpcComingEvent: React.FC<UpcComingEventProps> = ({ events }) => {
       {/* Events Grid */}
       {filteredEvents.length > 0 ? (
         <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-2"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-2"
           id="events-grid"
         >
           {filteredEvents.map((item) => (
@@ -205,19 +204,19 @@ const UpcComingEvent: React.FC<UpcComingEventProps> = ({ events }) => {
         </div>
       ) : (
         /* Empty State */
-        <div className="flex flex-col items-center justify-center p-12 text-center bg-surface-container-lowest rounded-2xl border border-outline-variant/30 mt-4 shadow-sm">
-          <div className="w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center text-outline mb-4">
-            <MdSearchOff className="text-[36px]" />
+        <div className="flex flex-col items-center justify-center p-12 text-center bg-white rounded-2xl border border-slate-200/80 mt-4 shadow-subtle">
+          <div className="w-16 h-16 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 mb-4">
+            <MdSearchOff className="text-3xl" />
           </div>
-          <h3 className="font-headline-sm text-headline-sm text-on-surface font-bold">
+          <h3 className="text-xl font-bold text-slate-900">
             No initiatives found
           </h3>
-          <p className="mt-1 font-body-sm text-body-sm text-on-surface-variant max-w-md">
+          <p className="mt-1 text-sm text-slate-500 max-w-md">
             We couldn&apos;t find any events matching &quot;{searchQuery || selectedCategory}&quot;.
             Try clearing filters or search with different keywords.
           </p>
           <button
-            className="mt-5 px-5 py-2.5 rounded-lg bg-primary-container text-white font-label-md text-label-md font-semibold hover:bg-primary transition-all shadow-sm cursor-pointer"
+            className="mt-5 px-5 py-2.5 rounded-xl bg-brand-600 text-white text-sm font-semibold hover:bg-brand-700 transition-all shadow-sm cursor-pointer"
             onClick={handleResetFilters}
             type="button"
           >

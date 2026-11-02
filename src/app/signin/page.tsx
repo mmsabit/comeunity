@@ -15,7 +15,7 @@ const SignInPage = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     const formData = new FormData(e.currentTarget);
     const user = Object.fromEntries(formData.entries()) as Record<
       string,
@@ -56,7 +56,7 @@ const SignInPage = () => {
         transition: Bounce,
       });
     }
-  }
+  };
 
   const GoogleSignIn = async () => {
     const data = await authClient.signIn.social({
@@ -77,21 +77,29 @@ const SignInPage = () => {
       });
     }
   };
+
   return (
-    <div className="max-w-7xl mx-auto my-20">
-      <div className="flex flex-col h-[90vh] items-center justify-center">
-        <div className="border-base-300 rounded-box w-120 border p-6 bg-white shadow-sm">
-          <h2 className="text-center text-2xl font-semibold mb-2">
-            Sign in to your account
-          </h2>
-          <p className="text-center  text-[12px] mb-4">
-            Manage your Social Event, coordinate projects, and Geather People.
-          </p>
-          <button className="btn bg-white text-black border-[#e5e5e5] w-full" onClick={GoogleSignIn}>
+    <div className="min-h-[calc(100vh-80px)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-surface">
+      <div className="w-full max-w-md">
+        <div className="bg-white rounded-3xl border border-slate-200/80 shadow-card p-8 sm:p-10">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Sign in to your account
+            </h2>
+            <p className="mt-2 text-xs sm:text-sm text-slate-500">
+              Manage your community events, coordinate projects, and gather people.
+            </p>
+          </div>
+
+          <button
+            className="w-full flex items-center justify-center gap-3 py-3 px-4 border border-slate-200 rounded-xl bg-white hover:bg-slate-50 text-slate-700 font-semibold text-sm transition-all shadow-xs cursor-pointer"
+            onClick={GoogleSignIn}
+            type="button"
+          >
             <svg
               aria-label="Google logo"
-              width="16"
-              height="16"
+              width="18"
+              height="18"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
             >
@@ -115,54 +123,72 @@ const SignInPage = () => {
                 ></path>
               </g>
             </svg>
-            Sign in with Google
+            <span>Sign in with Google</span>
           </button>
-          <div className="text-xs flex gap-2 items-center justify-center my-4">
-            <hr className=" border border-base-300 w-3/10" />
-            <span className="w-4/10 text-center">OR SIGN IN WITH EMAIL</span>
-            <hr className=" border border-base-300 w-3/10" />
+
+          <div className="text-xs flex gap-2 items-center justify-center my-6 text-slate-400 font-medium">
+            <hr className="border-slate-200 flex-1" />
+            <span className="px-2">OR SIGN IN WITH EMAIL</span>
+            <hr className="border-slate-200 flex-1" />
           </div>
-          <form onSubmit={handleSubmit}>
-            <fieldset className="fieldset ">
-              <label className="text-sm">Email</label>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5">
+                Email
+              </label>
               <input
                 type="email"
-                className="input  mb-2 w-full"
+                className="w-full px-4 py-2.5 text-sm text-slate-800 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-brand-600 focus:ring-2 focus:ring-brand-500/20 transition-all"
                 name="user_email"
-                placeholder="Email"
+                placeholder="you@example.com"
+                required
               />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5">
+                Password
+              </label>
               <div className="relative">
-                <label className="text-sm">Password</label>
                 <input
                   type={showPassword ? "text" : "password"}
-                  className="input  w-full"
+                  className="w-full px-4 py-2.5 text-sm text-slate-800 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-brand-600 focus:ring-2 focus:ring-brand-500/20 transition-all"
                   name="user_password"
-                  placeholder="Password"
+                  placeholder="Enter your password"
+                  required
                 />
                 <button
-                  className="absolute right-3 top-8 cursor-pointer"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer"
                   onClick={handleShow}
                   type="button"
                 >
                   {showPassword ? (
-                    <FaEyeSlash size={17} />
+                    <FaEyeSlash size={16} />
                   ) : (
-                    <FaEye size={17} />
+                    <FaEye size={16} />
                   )}
                 </button>
               </div>
-              <button className="btn btn-primary mt-4">Sign in</button>
-            </fieldset>
+            </div>
+
+            <button
+              className="w-full mt-2 py-3.5 px-6 rounded-xl bg-linear-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 text-white font-semibold text-sm shadow-md hover:shadow-lg transition-all cursor-pointer"
+              type="submit"
+            >
+              Sign in
+            </button>
           </form>
-          <div className="my-5 text-center">
-            <p className="text-sm">
-              Don&apos;t have a Account yet?
+
+          <div className="mt-6 text-center text-sm text-slate-600">
+            <p>
+              Don&apos;t have an account yet?{" "}
               <Link
-                href={"/signup"}
-                className="font-semibold text-primary ms-1 hover:underline"
+                href="/signup"
+                className="font-semibold text-brand-600 hover:text-brand-700 hover:underline"
               >
                 Create an Account
-              </Link>{" "}
+              </Link>
             </p>
           </div>
         </div>

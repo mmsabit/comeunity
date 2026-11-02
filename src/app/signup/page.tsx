@@ -67,7 +67,9 @@ const SignUpPage = () => {
           transition: Bounce,
         });
       }
+      return;
     }
+
     toast.error("Please enter valid information", {
       position: "bottom-right",
       autoClose: 5000,
@@ -108,21 +110,27 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto my-20">
-      <div className="flex flex-col h-[90vh] items-center justify-center">
-        <div className="border-base-300 rounded-box w-120 border p-6 bg-white shadow-sm">
-          <h2 className="text-center text-2xl font-semibold mb-2">
-            Create your account
-          </h2>
-          <p className="text-center text-[12px] mb-4">
-            Choose how you would like to participate and get fully registered in
-            under two minutes.
-          </p>
-          <button className="btn bg-white text-black border-[#e5e5e5] w-full" onClick={GoogleSignIn}>
+    <div className="min-h-[calc(100vh-80px)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-surface">
+      <div className="w-full max-w-md">
+        <div className="bg-white rounded-3xl border border-slate-200/80 shadow-card p-8 sm:p-10">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Create your account
+            </h2>
+            <p className="mt-2 text-xs sm:text-sm text-slate-500">
+              Choose how you would like to participate and get fully registered in under two minutes.
+            </p>
+          </div>
+
+          <button
+            className="w-full flex items-center justify-center gap-3 py-3 px-4 border border-slate-200 rounded-xl bg-white hover:bg-slate-50 text-slate-700 font-semibold text-sm transition-all shadow-xs cursor-pointer"
+            onClick={GoogleSignIn}
+            type="button"
+          >
             <svg
               aria-label="Google logo"
-              width="16"
-              height="16"
+              width="18"
+              height="18"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
             >
@@ -146,51 +154,68 @@ const SignUpPage = () => {
                 />
               </g>
             </svg>
-            Sign Up with Google
+            <span>Sign Up with Google</span>
           </button>
-          <div className="text-xs flex gap-2 items-center justify-center my-4">
-            <hr className="border border-base-300 w-3/10" />
-            <span className="w-4/10 text-center">OR SIGN IN WITH EMAIL</span>
-            <hr className="border border-base-300 w-3/10" />
+
+          <div className="text-xs flex gap-2 items-center justify-center my-6 text-slate-400 font-medium">
+            <hr className="border-slate-200 flex-1" />
+            <span className="px-2">OR SIGN IN WITH EMAIL</span>
+            <hr className="border-slate-200 flex-1" />
           </div>
-          <form onSubmit={handleSubmit}>
-            <fieldset className="fieldset">
-              <label className="text-sm">Name</label>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5">
+                Name
+              </label>
               <input
                 type="text"
-                className="input mb-2 w-full"
+                className="w-full px-4 py-2.5 text-sm text-slate-800 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-brand-600 focus:ring-2 focus:ring-brand-500/20 transition-all"
                 placeholder="Full name"
                 name="user_name"
                 required
               />
+            </div>
 
-              <label className="text-sm">Email</label>
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5">
+                Email
+              </label>
               <input
                 type="email"
-                className="input mb-2 w-full"
+                className="w-full px-4 py-2.5 text-sm text-slate-800 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-brand-600 focus:ring-2 focus:ring-brand-500/20 transition-all"
                 placeholder="Email"
                 name="user_email"
                 required
               />
+            </div>
 
-              <label className="text-sm">Profile Photo</label>
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5">
+                Profile Photo
+              </label>
               <input
                 type="url"
-                className="input mb-2 w-full"
+                className="w-full px-4 py-2.5 text-sm text-slate-800 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-brand-600 focus:ring-2 focus:ring-brand-500/20 transition-all"
                 placeholder="Your Image URL"
                 name="user_photo"
                 required
               />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5">
+                Password
+              </label>
               <div className="relative">
-                <label className="text-sm">Password</label>
                 <input
                   type={showPassword ? "text" : "password"}
-                  className={`input mb-1 w-full transition-colors  ${
+                  className={`w-full px-4 py-2.5 text-sm text-slate-800 bg-white border rounded-xl focus:outline-none transition-all ${
                     password.length === 0
-                      ? ""
+                      ? "border-slate-200 focus:border-brand-600 focus:ring-2 focus:ring-brand-500/20"
                       : allValid
-                        ? "border-green-500 focus:border-green-500"
-                        : "border-rose-400 focus:border-rose-400"
+                        ? "border-emerald-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
+                        : "border-rose-400 focus:border-rose-400 focus:ring-2 focus:ring-rose-400/20"
                   }`}
                   placeholder="Password"
                   value={password}
@@ -199,57 +224,59 @@ const SignUpPage = () => {
                   required
                 />
                 <button
-                  className="absolute right-3 top-8 cursor-pointer"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer"
                   onClick={handleShow}
                   type="button"
                 >
                   {showPassword ? (
-                    <FaEyeSlash size={17} />
+                    <FaEyeSlash size={16} />
                   ) : (
-                    <FaEye size={17} />
+                    <FaEye size={16} />
                   )}
                 </button>
               </div>
+            </div>
 
-              {/* Live Password Validation Rules */}
-              {
-                <ul className="mb-3 mt-1 space-y-1 rounded-lg bg-slate-50 border border-slate-200 p-3">
-                  {rules.map((rule) => (
-                    <li
-                      key={rule.label}
-                      className="flex items-center gap-2 text-xs"
-                    >
-                      {rule.met ? (
-                        <MdCheckCircle className="text-green-500 text-[15px] shrink-0" />
-                      ) : (
-                        <MdCancel className="text-rose-400 text-[15px] shrink-0" />
-                      )}
-                      <span
-                        className={
-                          rule.met ? "text-green-700" : "text-slate-500"
-                        }
-                      >
-                        {rule.label}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              }
+            {/* Live Password Validation Rules */}
+            <ul className="space-y-1.5 rounded-xl bg-slate-50 border border-slate-200/80 p-3.5">
+              {rules.map((rule) => (
+                <li
+                  key={rule.label}
+                  className="flex items-center gap-2 text-xs"
+                >
+                  {rule.met ? (
+                    <MdCheckCircle className="text-emerald-500 text-sm shrink-0" />
+                  ) : (
+                    <MdCancel className="text-rose-400 text-sm shrink-0" />
+                  )}
+                  <span
+                    className={
+                      rule.met ? "text-emerald-700 font-medium" : "text-slate-500"
+                    }
+                  >
+                    {rule.label}
+                  </span>
+                </li>
+              ))}
+            </ul>
 
-              <button className="btn btn-primary mt-4" type="submit">
-                Sign up
-              </button>
-            </fieldset>
+            <button
+              className="w-full mt-2 py-3.5 px-6 rounded-xl bg-linear-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 text-white font-semibold text-sm shadow-md hover:shadow-lg transition-all cursor-pointer"
+              type="submit"
+            >
+              Sign up
+            </button>
           </form>
-          <div className="my-5 text-center">
-            <p className="text-sm">
-              Already have an Account?
+
+          <div className="mt-6 text-center text-sm text-slate-600">
+            <p>
+              Already have an Account?{" "}
               <Link
-                href={"/signin"}
-                className="font-semibold text-primary ms-1 hover:underline"
+                href="/signin"
+                className="font-semibold text-brand-600 hover:text-brand-700 hover:underline"
               >
                 Sign in
-              </Link>{" "}
+              </Link>
             </p>
           </div>
         </div>

@@ -10,8 +10,6 @@ export const metadata: Metadata = {
     "Explore and join hands-on upcoming community events, cleanups, drives, and civic initiatives happening today and in the upcoming days.",
 };
 
-
-
 const getUpcomingEvents = async (): Promise<EventItem[]> => {
   try {
     const res = await fetch("http://localhost:3200/events", {
@@ -55,18 +53,18 @@ const UpcComingEvents = async () => {
   const events = await getUpcomingEvents();
 
   return (
-    <div className="w-full pt-24 lg:pt-28 pb-20 bg-surface min-h-screen">
+    <div className="w-full pt-10 pb-20 bg-surface min-h-[calc(100vh-80px)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
-        <div className="mb-8 md:mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-low text-primary-container font-caption text-caption font-semibold mb-3 border border-outline-variant/30">
-            <span className="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+        <div className="mb-10">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-50 border border-brand-100/80 text-brand-700 text-xs font-bold uppercase tracking-wider mb-3">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
             <span>Happening Today &amp; Upcoming Days</span>
           </div>
-          <h1 className="font-headline-lg text-headline-lg text-on-surface tracking-tight font-bold">
+          <h1 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold text-slate-900 tracking-tight">
             Upcoming Community Initiatives
           </h1>
-          <p className="mt-2 font-body-md text-body-md text-on-surface-variant max-w-2xl leading-relaxed">
+          <p className="mt-3 text-base sm:text-lg text-slate-600 max-w-2xl leading-relaxed">
             Discover upcoming and active hands-on opportunities in your district for today and the days ahead. Filter by cause, search neighborhoods, and reserve your volunteer spot.
           </p>
         </div>

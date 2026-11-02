@@ -1,76 +1,112 @@
 import React from "react";
 import Image from "next/image";
-import { MdEvent, MdLocationOn } from "react-icons/md";
 import { EventItem } from "@/type/type";
 import { CiUser } from "react-icons/ci";
 import Link from "next/link";
 
 const EventCard = ({ item }: { item: EventItem }) => {
   return (
-    <div className="flex flex-col bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-all overflow-hidden group">
-      <div className="relative h-48 w-full overflow-hidden bg-surface-container">
+    <div
+      className="bg-white rounded-2xl border border-slate-200/80 shadow-subtle hover:shadow-card hover:-translate-y-1 transition-all duration-200 overflow-hidden flex flex-col group"
+      data-purpose="event-card"
+    >
+      {/* Image & Tag Container */}
+      <div className="relative h-52 w-full overflow-hidden bg-slate-100">
         <Image
           alt={item.eventTitle || "Event Image"}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          height={192}
-          src={item.thumbnailUrl}
+          height={208}
+          src={item.thumbnailUrl || "https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=800&q=80"}
           width={400}
           unoptimized
         />
-        <div className="absolute top-3 left-3 flex items-center gap-2">
-          <span
-            className={`px-3 py-1 rounded-full font-label-sm text-label-sm font-bold shadow-sm bg-primary-container text-white`}
-          >
+        <div className="absolute top-3 left-3">
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-brand-600 text-white shadow-sm capitalize">
             {item.eventType}
           </span>
         </div>
       </div>
 
-      <div className="p-5 flex flex-col flex-1">
-        <div className="flex items-center gap-2 font-label-sm text-label-sm font-semibold mb-2 text-primary-container">
-          <MdEvent className="text-[16px]" />
-          <span>{item.eventDate}</span>
-        </div>
+      {/* Content Area */}
+      <div className="p-6 flex-1 flex flex-col justify-between">
+        <div>
+          {/* Date */}
+          <div className="flex items-center gap-2 text-xs font-semibold text-brand-600 mb-2">
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+              />
+            </svg>
+            <span>{item.eventDate}</span>
+          </div>
 
-        <h3 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary-container transition-colors line-clamp-2 mb-2 font-bold">
-          {item.eventTitle}
-        </h3>
+          {/* Title */}
+          <h3 className="text-xl font-bold text-slate-900 group-hover:text-brand-600 transition-colors line-clamp-2">
+            {item.eventTitle}
+          </h3>
 
-        <div className="flex items-center gap-1.5 text-on-surface-variant font-body-sm text-body-sm mb-4">
-          <MdLocationOn className="text-[18px] text-outline shrink-0" />
-          <span className="truncate">{item.eventLocation}</span>
-        </div>
+          {/* Location */}
+          <div className="mt-2 flex items-center gap-1.5 text-sm text-slate-500">
+            <svg
+              className="w-4 h-4 text-slate-400 shrink-0"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+              />
+              <path
+                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+              />
+            </svg>
+            <span className="truncate">{item.eventLocation}</span>
+          </div>
 
-        <div className="flex items-center gap-2 mb-4 pt-3 bg-surface-container-low/50 p-2.5 rounded-lg">
-          <div className="w-7 h-7 rounded-full flex items-center justify-center font-bold text-caption bg-surface-container-high text-on-surface">
+          {/* Host Info Box */}
+          <div className="mt-5 p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-3">
             {item.organizerImage ? (
               <Image
-                alt={item.organizerName || "Organizer Image"}
-                className="w-full h-full object-cover rounded-full"
-                height={28}
+                alt={item.organizerName || "Organizer avatar"}
+                className="w-8 h-8 rounded-full object-cover ring-1 ring-slate-200"
+                height={32}
                 src={item.organizerImage}
-                width={28}
+                width={32}
                 unoptimized
               />
             ) : (
-              <CiUser className="text-[20px]" />
+              <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 ring-1 ring-slate-200">
+                <CiUser className="text-base" />
+              </div>
             )}
-          </div>
-          <div className="flex flex-col min-w-0">
-            <span className="font-caption text-caption text-on-surface-variant">
-              Event Hosted by
-            </span>
-            <span className="font-label-sm text-label-sm text-on-surface font-semibold truncate">
-              {item.organizerName}
-            </span>
+            <div className="text-xs min-w-0">
+              <p className="text-slate-400 font-medium">Event Hosted by</p>
+              <p className="font-bold text-slate-800 truncate">
+                {item.organizerName}
+              </p>
+            </div>
           </div>
         </div>
 
-        {/* Action Button */}
-        <div className="mt-auto pt-2">
-          <Link href={`/event/${item._id}`}
-            className="btn btn-primary w-full"
-            type="button"
+        {/* Button CTA */}
+        <div className="mt-6">
+          <Link
+            href={`/event/${item._id}`}
+            className="w-full py-3 px-4 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold text-sm transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-500 block text-center"
           >
             Join Event
           </Link>

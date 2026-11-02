@@ -66,30 +66,32 @@ const EditEvent = ({ event }: { event: EventItem }) => {
   return (
     <>
       <button
-        className="btn btn-primary btn-outline w-1/2"
+        className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold transition-colors cursor-pointer"
         onClick={() =>
           (
             document.getElementById("Edit-modal") as HTMLDialogElement
           )?.showModal()
         }
+        type="button"
       >
-        <RiEdit2Fill /> Edit Event
+        <RiEdit2Fill className="text-sm" />
+        <span>Edit</span>
       </button>
 
-      <dialog ref={dialogRef} id="Edit-modal" className="modal">
-        <div className="modal-box max-w-2xl">
+      <dialog ref={dialogRef} id="Edit-modal" className="modal backdrop-blur-xs">
+        <div className="modal-box bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-8 max-w-2xl shadow-card">
           {/* Close (cross) button */}
           <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-3 top-3">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4 text-slate-400 hover:text-slate-600">
               <IoClose size={20} />
             </button>
           </form>
 
-          <h3 className="font-bold text-lg mb-6">Edit Event</h3>
+          <h3 className="font-bold text-xl text-slate-900 mb-6">Edit Event</h3>
 
           {/* ── Edit Event Form ── */}
           <form
-            className="space-y-6"
+            className="space-y-5"
             id="edit-event-form"
             onSubmit={handleSubmit}
           >
@@ -102,7 +104,7 @@ const EditEvent = ({ event }: { event: EventItem }) => {
                 Event Title <span className="text-rose-500">*</span>
               </label>
               <input
-                className="block w-full px-4 py-2.5 text-sm text-slate-800 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-700 focus:ring-2 focus:ring-indigo-700/15"
+                className="block w-full px-4 py-2.5 text-sm text-slate-800 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-brand-600 focus:ring-2 focus:ring-brand-500/20"
                 id="eventTitle"
                 name="eventTitle"
                 placeholder="Enter event title..."
@@ -124,7 +126,7 @@ const EditEvent = ({ event }: { event: EventItem }) => {
                   Event Type <span className="text-rose-500">*</span>
                 </label>
                 <select
-                  className="block w-full px-3 py-2.5 text-sm text-slate-800 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-700 focus:ring-2 focus:ring-indigo-700/15"
+                  className="block w-full px-3 py-2.5 text-sm text-slate-800 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-brand-600 focus:ring-2 focus:ring-brand-500/20"
                   id="eventType"
                   name="eventType"
                   required
@@ -194,7 +196,7 @@ const EditEvent = ({ event }: { event: EventItem }) => {
                       dialogRef.current.appendChild(picker.calendarContainer);
                     }
                   }}
-                  className="block w-full px-3 py-2.5 text-sm text-slate-800 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-700 focus:ring-2 focus:ring-indigo-700/15"
+                  className="block w-full px-3 py-2.5 text-sm text-slate-800 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-brand-600 focus:ring-2 focus:ring-brand-500/20"
                   placeholder="Select a date"
                 />
                 <p className="mt-1.5 text-[11px] text-slate-400">
@@ -212,7 +214,7 @@ const EditEvent = ({ event }: { event: EventItem }) => {
                 Location / Venue <span className="text-rose-500">*</span>
               </label>
               <input
-                className="block w-full px-4 py-2.5 text-sm text-slate-800 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-700 focus:ring-2 focus:ring-indigo-700/15"
+                className="block w-full px-4 py-2.5 text-sm text-slate-800 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-brand-600 focus:ring-2 focus:ring-brand-500/20"
                 id="eventLocation"
                 name="eventLocation"
                 placeholder="e.g. Riverside Commons Pavilion, Gate 3"
@@ -232,7 +234,7 @@ const EditEvent = ({ event }: { event: EventItem }) => {
                 Thumbnail Image URL <span className="text-rose-500">*</span>
               </label>
               <input
-                className="block w-full px-4 py-2.5 text-sm text-slate-800 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-700 focus:ring-2 focus:ring-indigo-700/15"
+                className="block w-full px-4 py-2.5 text-sm text-slate-800 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-brand-600 focus:ring-2 focus:ring-brand-500/20"
                 id="thumbnailUrl"
                 name="thumbnailUrl"
                 placeholder="https://..."
@@ -252,7 +254,7 @@ const EditEvent = ({ event }: { event: EventItem }) => {
                 Event Description <span className="text-rose-500">*</span>
               </label>
               <textarea
-                className="block w-full p-3.5 text-sm text-slate-800 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-700 focus:ring-2 focus:ring-indigo-700/15 leading-relaxed"
+                className="block w-full p-3.5 text-sm text-slate-800 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-brand-600 focus:ring-2 focus:ring-brand-500/20 leading-relaxed"
                 id="eventDescription"
                 name="eventDescription"
                 placeholder="Provide event details, volunteer expectations, item drop-off points, and schedule..."
@@ -266,7 +268,7 @@ const EditEvent = ({ event }: { event: EventItem }) => {
             {/* Submit */}
             <div className="pt-2">
               <button
-                className="w-full py-3.5 px-6 rounded-xl bg-indigo-700 hover:bg-indigo-800 active:bg-indigo-900 text-white font-semibold text-sm shadow-md flex items-center justify-center gap-2 transition-all disabled:opacity-60"
+                className="w-full py-3.5 px-6 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold text-sm shadow-md flex items-center justify-center gap-2 transition-all disabled:opacity-60 cursor-pointer"
                 type="submit"
                 disabled={loading}
               >
