@@ -1,14 +1,13 @@
 import { EventItem } from "@/type/type";
 import Image from "next/image";
-import React from "react";
 import { CiUser } from "react-icons/ci";
 import { FaClock, FaRegCalendarAlt } from "react-icons/fa";
 import { FaLocationDot, FaUserGroup } from "react-icons/fa6";
-import { MdArrowForward } from "react-icons/md";
 import EditEvent from "./EditEvent";
 import DeleteEvent from "./DeleteEvent";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import JoinBtn from "./JoinBtn";
 
 const EventDetailesPage = async ({
   params,
@@ -115,14 +114,14 @@ const EventDetailesPage = async ({
                   </div>
                 </div>
 
-                <button
-                  className="w-full mt-4 py-3.5 px-4 rounded-xl bg-primary-container hover:bg-primary text-white font-title-md text-title-md font-bold flex items-center justify-center gap-2 shadow-md transition-all active:scale-[0.99]"
-                  id="rsvp-submit-btn"
-                  type="submit"
-                >
-                  <span>Join this Event</span>
-                  <MdArrowForward className="text-[20px]" />
-                </button>
+                <JoinBtn
+                  event={event}
+                  user={
+                    session?.user
+                      ? { id: session.user.id, name: session.user.name }
+                      : null
+                  }
+                />
 
                 {session?.user?.id === event.organizerId && (
                   <div className="flex justify-center items-center mt-5 w-auto gap-2">
