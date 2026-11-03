@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import particleConfig from "./particlesjs-config.json";
+import React, { useEffect, useRef, useState } from "react";
 
 type CounterProps = {
   target: number;
@@ -55,6 +56,188 @@ const Counter = ({
 };
 
 const Hero = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const context = canvas?.getContext("2d");
+    if (!canvas || !context) {
+      return;
+    }
+
+    const config = particleConfig.particles;
+    const color = config.color.value;
+    const colorMatch = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(color);
+    if (!colorMatch) {
+      console.error("The hero particle color must be a six-digit hex value.");
+      return;
+    }
+
+    const particleColor = colorMatch
+      .slice(1)
+      .map((channel) => Number.parseInt(channel, 16))
+      .join(", ");
+    const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const particles: {
+      x: number;
+      y: number;
+      radius: number;
+      opacity: number;
+      opacityDirection: number;
+      velocityX: number;
+      velocityY: number;
+    }[] = [];
+    let width = 0;
+    let height = 0;
+    let pixelRatio = 1;
+    let previousTimestamp = 0;
+    let animationFrame = 0;
+
+    const createParticle = (
+      x = Math.random() * width,
+      y = Math.random() * height,
+    ) => {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = config.move.speed * (0.5 + Math.random()) * 4;
+      const minOpacity = config.opacity.anim.opacity_min;
+
+      return {
+        x,
+        y,
+        radius: Math.random() * config.size.value,
+        opacity: config.opacity.random
+          ? minOpacity +
+            Math.random() * (config.opacity.value - minOpacity)
+          : config.opacity.value,
+        opacityDirection: Math.random() < 0.5 ? -1 : 1,
+        velocityX: Math.cos(angle) * speed,
+        velocityY: Math.sin(angle) * speed,
+      };
+    };
+
+    const resizeCanvas = () => {
+      const bounds = canvas.getBoundingClientRect();
+      width = bounds.width;
+      height = bounds.height;
+      pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(width * pixelRatio);
+      canvas.height = Math.round(height * pixelRatio);
+      context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+
+      const density = config.number.density;
+      const count = density.enable
+        ? Math.min(
+            config.number.value,
+            Math.max(
+              24,
+              Math.round(
+                ((width * height) / 1000) *
+                  (config.number.value / density.value_area),
+              ),
+            ),
+          )
+        : config.number.value;
+
+      particles.length = 0;
+      for (let index = 0; index < count; index += 1) {
+        particles.push(createParticle());
+      }
+    };
+
+    const draw = (deltaTime: number) => {
+      context.clearRect(0, 0, width, height);
+
+      particles.forEach((particle) => {
+        if (config.opacity.anim.enable && !motionPreference.matches) {
+          particle.opacity +=
+            particle.opacityDirection *
+            config.opacity.anim.speed *
+            deltaTime;
+          if (particle.opacity >= config.opacity.value) {
+            particle.opacity = config.opacity.value;
+            particle.opacityDirection = -1;
+          } else if (particle.opacity <= config.opacity.anim.opacity_min) {
+            particle.opacity = config.opacity.anim.opacity_min;
+            particle.opacityDirection = 1;
+          }
+        }
+
+        if (config.move.enable && !motionPreference.matches) {
+          particle.x += particle.velocityX * deltaTime;
+          particle.y += particle.velocityY * deltaTime;
+          if (particle.x < 0) particle.x = width;
+          if (particle.x > width) particle.x = 0;
+          if (particle.y < 0) particle.y = height;
+          if (particle.y > height) particle.y = 0;
+        }
+
+        context.beginPath();
+        context.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+        context.fillStyle = `rgba(${particleColor}, ${particle.opacity})`;
+        context.fill();
+      });
+    };
+
+    const animate = (timestamp: number) => {
+      const deltaTime = previousTimestamp
+        ? Math.min((timestamp - previousTimestamp) / 1000, 0.05)
+        : 0;
+      previousTimestamp = timestamp;
+      draw(deltaTime);
+      if (!motionPreference.matches) {
+        animationFrame = window.requestAnimationFrame(animate);
+      }
+    };
+
+    const handleResize = () => {
+      resizeCanvas();
+      draw(0);
+    };
+
+    const handleMotionPreferenceChange = () => {
+      window.cancelAnimationFrame(animationFrame);
+      previousTimestamp = 0;
+      animationFrame = window.requestAnimationFrame(animate);
+    };
+
+    const handleCanvasClick = (event: MouseEvent) => {
+      const clickConfig = particleConfig.interactivity.events.onclick;
+      if (
+        !clickConfig.enable ||
+        clickConfig.mode !== "push" ||
+        !config.move.enable ||
+        !config.number.value
+      ) {
+        return;
+      }
+
+      const bounds = canvas.getBoundingClientRect();
+      for (
+        let index = 0;
+        index < particleConfig.interactivity.modes.push.particles_nb;
+        index += 1
+      ) {
+        particles.push(
+          createParticle(event.clientX - bounds.left, event.clientY - bounds.top),
+        );
+      }
+    };
+
+    resizeCanvas();
+    animationFrame = window.requestAnimationFrame(animate);
+    const resizeObserver = new ResizeObserver(handleResize);
+    resizeObserver.observe(canvas);
+    motionPreference.addEventListener("change", handleMotionPreferenceChange);
+    canvas.addEventListener("click", handleCanvasClick);
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      resizeObserver.disconnect();
+      motionPreference.removeEventListener("change", handleMotionPreferenceChange);
+      canvas.removeEventListener("click", handleCanvasClick);
+    };
+  }, []);
+
   return (
     <section
       className="relative pt-12 pb-24 lg:pt-32 lg:pb-32 overflow-hidden hero-mesh "
@@ -70,7 +253,13 @@ const Hero = () => {
         <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-225 h-125 bg-linear-to-b from-indigo-200/50 to-purple-100/10 blur-3xl rounded-full"></div>
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <canvas
+        ref={canvasRef}
+        aria-hidden="true"
+        className="absolute inset-0 z-0 h-full w-full opacity-50"
+      />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Text Hero Content */}
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-extrabold text-slate-900 tracking-tight leading-[1.15]">

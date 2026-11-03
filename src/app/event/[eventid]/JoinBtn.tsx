@@ -51,7 +51,7 @@ const JoinBtn = ({
     });
     if (res.ok) {
       toast.success("You have successfully joined the event!", {
-        position: "top-right",
+        position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: false,

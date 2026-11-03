@@ -27,7 +27,7 @@ const DeleteEvent = ({ event }: { event: EventItem }) => {
         document.getElementById("delete-modal") as HTMLDialogElement | null
       )?.close();
       toast.success(`${event.eventTitle} deleted successfully!`, {
-        position: "top-right",
+        position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: false,

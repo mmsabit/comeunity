@@ -33,7 +33,7 @@ const JoinCancle = ({
       toast.success(
         `${joindata.eventdata.eventTitle} registration cancelled!`,
         {
-          position: "top-right",
+          position: "bottom-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: false,
