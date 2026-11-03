@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import { IoMdAddCircleOutline } from 'react-icons/io';
@@ -16,6 +16,7 @@ import { toast, Bounce } from 'react-toastify';
 
 const NewEvent = () => {
   const dateRef = useRef<HTMLInputElement>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (dateRef.current) {
@@ -33,6 +34,7 @@ const NewEvent = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (loading) return;
     // Capture the form element before any `await` — React nullifies e.currentTarget after async suspension
     const form = e.currentTarget;
     const formData = new FormData(form);
@@ -63,20 +65,46 @@ const NewEvent = () => {
       }
     }
 
-    const {data} = await authClient.token();
-    const token = data?.token;
+    try {
+      setLoading(true);
+      const {data} = await authClient.token();
+      const token = data?.token;
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(eventData),
-    });
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(eventData),
+      });
 
-    if (res.ok) {
-      toast.success('Your event was successfully created!', {
+      if (res.ok) {
+        toast.success('Your event was successfully created!', {
+          position: 'bottom-right',
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          theme: 'light',
+          transition: Bounce,
+        });
+        form.reset();
+      } else {
+        toast.error('Failed to create event. Please try again.', {
+          position: 'bottom-right',
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          theme: 'light',
+          transition: Bounce,
+        });
+      }
+    } catch {
+      toast.error('An unexpected error occurred. Please try again.', {
         position: 'bottom-right',
         autoClose: 4000,
         hideProgressBar: false,
@@ -86,7 +114,8 @@ const NewEvent = () => {
         theme: 'light',
         transition: Bounce,
       });
-      form.reset();
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -262,11 +291,21 @@ const NewEvent = () => {
             {/* Submit Button */}
             <div className="pt-2">
               <button
-                className="w-full py-4 px-6 rounded-xl bg-linear-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 text-white font-semibold text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
+                className="w-full py-4 px-6 rounded-xl bg-linear-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 text-white font-semibold text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed"
                 type="submit"
+                disabled={loading}
               >
-                <IoMdAddCircleOutline size={20} />
-                <span>Publish Event</span>
+                {loading ? (
+                  <>
+                    <span className="loading loading-spinner loading-sm" />
+                    <span>publishing...</span>
+                  </>
+                ) : (
+                  <>
+                    <IoMdAddCircleOutline size={20} />
+                    <span>Publish Event</span>
+                  </>
+                )}
               </button>
             </div>
           </form>

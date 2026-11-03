@@ -3,6 +3,7 @@
 import { authClient } from "@/lib/auth-client";
 import { EventItem } from "@/type/type";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { MdArrowForward } from "react-icons/md";
 import { toast, Bounce } from "react-toastify";
 
@@ -16,6 +17,7 @@ const JoinBtn = ({
   isEventPassed: boolean;
 }) => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const joinerdata = {
     joinerId: user?.id,
     joinerName: user?.name,
@@ -26,6 +28,7 @@ const JoinBtn = ({
   };
 
   const handleJoinEvent = async () => {
+    if (loading) return;
     if (!user) {
       toast.info("Please sign in to join this event", {
         position: "bottom-right",
@@ -36,49 +39,76 @@ const JoinBtn = ({
       return;
     }
 
-    const { data } = await authClient.token();
-    const token = data?.token;
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/event-joins`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        joinerdata,
-        eventdata,
-      }),
-    });
-    if (res.ok) {
-      toast.success("You have successfully joined the event!", {
+    try {
+      setLoading(true);
+      const { data } = await authClient.token();
+      const token = data?.token;
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/event-joins`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          joinerdata,
+          eventdata,
+        }),
+      });
+      if (res.ok) {
+        toast.success("You have successfully joined the event!", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+        router.refresh();
+      } else {
+        const err = await res.json().catch(() => null);
+        toast.error(err?.message || "Failed to join event", {
+          position: "bottom-right",
+          theme: "light",
+          transition: Bounce,
+        });
+      }
+    } catch {
+      toast.error("An unexpected error occurred", {
         position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
         theme: "light",
         transition: Bounce,
       });
-      router.refresh();
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <button
       onClick={handleJoinEvent}
-      disabled={isEventPassed}
-      className={`w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl font-semibold text-sm transition-all shadow-md focus:outline-none focus:ring-2 focus:ring-brand-500 ${
+      disabled={isEventPassed || loading}
+      className={`w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl font-semibold text-sm transition-all shadow-md focus:outline-none focus:ring-2 focus:ring-brand-500 disabled:opacity-60 disabled:cursor-not-allowed ${
         isEventPassed
-          ? "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none"
+          ? "bg-slate-200 text-slate-400 shadow-none"
           : "bg-linear-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 text-white hover:shadow-lg cursor-pointer"
       }`}
       id="rsvp-submit-btn"
       type="button"
     >
-      <span>{isEventPassed ? "Event Ended" : "Join this Event"}</span>
-      {!isEventPassed && <MdArrowForward className="text-lg" />}
+      {loading ? (
+        <>
+          <span className="loading loading-spinner loading-sm" />
+          <span>Joining......</span>
+        </>
+      ) : (
+        <>
+          <span>{isEventPassed ? "Event Ended" : "Join this Event"}</span>
+          {!isEventPassed && <MdArrowForward className="text-lg" />}
+        </>
+      )}
     </button>
   );
 };
