@@ -200,7 +200,7 @@ const ProfilePage = () => {
                         value={name}
                       />
                     ) : (
-                      <p className="flex min-h-12 items-center break-words rounded-xl bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-800">
+                      <p className="flex min-h-12 items-center wrap-break-word rounded-xl bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-800">
                         {user.name || "Not set"}
                       </p>
                     )}

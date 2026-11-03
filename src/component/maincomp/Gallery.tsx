@@ -1,11 +1,11 @@
-import { EventItem } from "@/type/type";
+import { GalleryType } from "@/type/type";
 import Image from "next/image";
 import React from "react";
 
 const Gallery = async () => {
-  let GALLERY_ITEMS: EventItem[] = [];
+  let GALLERY_ITEMS: GalleryType[] = [];
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/gallery`, {
       next: { revalidate: 60 },
     });
     if (res.ok) {
@@ -59,26 +59,23 @@ const Gallery = async () => {
 
         {/* Visual Media Grid with Glassy Overlays */}
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {items.map((item: EventItem, index: number) => (
+          {items.map((item: GalleryType, index: number) => (
             <div
               className="relative group rounded-2xl overflow-hidden aspect-4/3 bg-slate-900 border border-slate-200 shadow-subtle"
               data-purpose="impact-photo-card"
               key={item._id || index}
             >
               <Image
-                alt={item.eventTitle || "Community impact moment"}
+                alt={item.event_name || "Community impact moment"}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 fill
-                src={item.thumbnailUrl || "https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=800&q=80"}
+                src={item.imagename || "https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=800&q=80"}
                 unoptimized
               />
               <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/40 to-transparent"></div>
               <div className="absolute bottom-0 inset-x-0 p-5 text-white">
-                <span className="text-xs font-semibold uppercase tracking-wider text-slate-300">
-                  {item.eventType}
-                </span>
                 <h3 className="text-lg font-bold text-white mt-0.5 line-clamp-1">
-                  {item.eventTitle}
+                  {item.event_name}
                 </h3>
                 <p className="text-xs text-slate-300 flex items-center gap-1 mt-1 truncate">
                   <svg
@@ -94,7 +91,7 @@ const Gallery = async () => {
                       strokeWidth="2"
                     />
                   </svg>
-                  <span>{item.eventLocation}</span>
+                  <span>{item.location}</span>
                 </p>
               </div>
             </div>

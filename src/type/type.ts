@@ -23,3 +23,10 @@ export interface EventRegistration {
   joinerdata: JoinerData;
   eventdata: EventItem;
 }
+
+export interface GalleryType{
+  _id: string;
+  imagename:string;
+  event_name:string;
+  location:string;
+}
