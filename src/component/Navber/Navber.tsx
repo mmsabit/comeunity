@@ -14,6 +14,7 @@ import {
   MdCalendarMonth,
   MdConfirmationNumber,
   MdLogout,
+  MdPersonOutline,
 } from "react-icons/md";
 import Navlink, { NAV_LINKS } from "./Navlink";
 import Navbtn from "./Navbtn";
@@ -274,6 +275,16 @@ const Navber = () => {
               </div>
 
               <div className="space-y-1">
+                <Link
+                  href="/profile"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-slate-700 hover:bg-brand-50 hover:text-brand-600 text-sm font-medium transition-colors"
+                >
+                  <div className="w-6 h-6 rounded-lg bg-indigo-50 text-brand-600 flex items-center justify-center">
+                    <MdPersonOutline className="text-base" />
+                  </div>
+                  <span>My Profile</span>
+                </Link>
                 <Link
                   href="/new_event"
                   onClick={() => setMobileMenuOpen(false)}

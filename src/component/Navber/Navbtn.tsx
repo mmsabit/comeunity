@@ -9,6 +9,7 @@ import {
   MdCalendarMonth,
   MdConfirmationNumber,
   MdLogout,
+  MdPersonOutline,
 } from "react-icons/md";
 import { toast, Bounce } from "react-toastify";
 
@@ -66,6 +67,15 @@ const Navbtn = () => {
           </div>
 
           <div className="py-1 flex flex-col gap-1">
+            <Link
+              className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-700 hover:bg-brand-50 hover:text-brand-600 text-sm font-medium transition-colors"
+              href="/profile"
+            >
+              <div className="w-6 h-6 rounded-lg bg-indigo-50 text-brand-600 flex items-center justify-center">
+                <MdPersonOutline className="text-base" />
+              </div>
+              <span>My Profile</span>
+            </Link>
             <Link
               className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-700 hover:bg-brand-50 hover:text-brand-600 text-sm font-medium transition-colors"
               data-path="create-event"

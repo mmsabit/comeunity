@@ -17,6 +17,7 @@ export async function proxy(request: NextRequest) {
         "/myevents",
         "/joined_event",
         "/joined-events",
+        "/profile",
     ];
 
     const authRoutes = ["/signin", "/signup"];
@@ -51,6 +52,7 @@ export const config = {
         "/myevents",
         "/joined_event",
         "/joined-events",
+        "/profile",
         "/signin",
         "/signup",
     ],
