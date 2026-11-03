@@ -16,9 +16,19 @@ const EventDetailesPage = async ({
 }) => {
   const { eventid } = await params;
   let event: EventItem | null = null;
+  
+  const jwtTokens =await auth.api.getToken({
+    headers: await headers(),
+  })
+
+  
+
   try {
     const res = await fetch(`http://localhost:3200/events/${eventid}`, {
       cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${jwtTokens?.token}`,
+      },
     });
     if (res.ok) {
       event = await res.json();
