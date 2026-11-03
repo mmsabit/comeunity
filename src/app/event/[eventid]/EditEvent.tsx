@@ -45,7 +45,7 @@ const EditEvent = ({ event }: { event: EventItem }) => {
         const token = data?.token;
 
     try {
-      const res = await fetch(`http://localhost:3200/events/${event._id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/${event._id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json", authorization: `Bearer ${token}`, },
         body: JSON.stringify(formData),

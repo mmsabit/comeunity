@@ -38,7 +38,7 @@ const JoinBtn = ({
 
     const { data } = await authClient.token();
     const token = data?.token;
-    const res = await fetch(`http://localhost:3200/event-joins`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/event-joins`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

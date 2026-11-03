@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 const AllEventsPage = async () => {
   let events: EventItem[] = [];
   try {
-    const res = await fetch("http://localhost:3200/events", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events`, {
       cache: "no-store",
     });
     if (res.ok) {

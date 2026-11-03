@@ -16,7 +16,7 @@ const parseEventDate = (dateStr?: string): Date | null => {
 const UpEvent = async () => {
   let Events: EventItem[] = [];
   try {
-    const res = await fetch("http://localhost:3200/events", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events`, {
       next: { revalidate: 60 },
     });
     if (res.ok) {

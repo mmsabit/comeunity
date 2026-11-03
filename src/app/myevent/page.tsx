@@ -16,7 +16,7 @@ const MyEvent = async () => {
   });
   const token = jwtTokens?.token;
     try {
-      const res = await fetch(`http://localhost:3200/myevents/${userId}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/myevents/${userId}`, {
         cache: 'no-store',
         headers: {
         authorization: `Bearer ${token}`,

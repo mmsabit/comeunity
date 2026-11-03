@@ -17,7 +17,7 @@ const JoinCancle = ({
     const { data } = await authClient.token();
     const token = data?.token;
     const res = await fetch(
-      `http://localhost:3200/event-joins/${joindata._id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/event-joins/${joindata._id}`,
       {
         method: "DELETE",
         headers: {

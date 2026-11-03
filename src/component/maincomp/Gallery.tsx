@@ -5,7 +5,7 @@ import React from "react";
 const Gallery = async () => {
   let GALLERY_ITEMS: EventItem[] = [];
   try {
-    const res = await fetch("http://localhost:3200/events", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events`, {
       next: { revalidate: 60 },
     });
     if (res.ok) {
@@ -20,7 +20,7 @@ const Gallery = async () => {
 
   return (
     <section
-      className="py-20 lg:py-28 bg-[#fafbff]"
+      className="py-20 lg:py-28 bg-surface"
       data-purpose="field-documentation-gallery"
       id="impact"
     >
@@ -61,7 +61,7 @@ const Gallery = async () => {
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {items.map((item: EventItem, index: number) => (
             <div
-              className="relative group rounded-2xl overflow-hidden aspect-[4/3] bg-slate-900 border border-slate-200 shadow-subtle"
+              className="relative group rounded-2xl overflow-hidden aspect-4/3 bg-slate-900 border border-slate-200 shadow-subtle"
               data-purpose="impact-photo-card"
               key={item._id || index}
             >
@@ -72,7 +72,7 @@ const Gallery = async () => {
                 src={item.thumbnailUrl || "https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=800&q=80"}
                 unoptimized
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent"></div>
+              <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/40 to-transparent"></div>
               <div className="absolute bottom-0 inset-x-0 p-5 text-white">
                 <span className="text-xs font-semibold uppercase tracking-wider text-slate-300">
                   {item.eventType}

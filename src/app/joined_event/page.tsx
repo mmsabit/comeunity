@@ -17,7 +17,7 @@ const JoinedEvent = async () => {
   const token = jwtTokens?.token;
 
     try {
-      const res = await fetch(`http://localhost:3200/event-joins/${userId}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/event-joins/${userId}`, {
         cache: 'no-store',
         headers: {
         authorization: `Bearer ${token}`,

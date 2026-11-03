@@ -22,7 +22,7 @@ const JoinValidation = async ({
   });
   const token = jwtTokens?.token;
     const res = await fetch(
-      `http://localhost:3200/event-joins/${user.id}/event/${event._id}`,{headers: {
+      `${process.env.NEXT_PUBLIC_API_URL}/event-joins/${user.id}/event/${event._id}`,{headers: {
         authorization: `Bearer ${token}`,
       }}
       ,
