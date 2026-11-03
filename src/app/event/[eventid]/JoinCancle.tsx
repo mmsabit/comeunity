@@ -1,4 +1,5 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import { EventRegistration } from "@/type/type";
 import { useRouter } from "next/navigation";
 import { Bounce, toast } from "react-toastify";
@@ -13,11 +14,16 @@ const JoinCancle = ({
   const router = useRouter();
 
   const handleCancleJoin = async () => {
+    const { data } = await authClient.token();
+    const token = data?.token;
     const res = await fetch(
       `http://localhost:3200/event-joins/${joindata._id}`,
       {
         method: "DELETE",
-      }
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      },
     );
 
     if (res.ok) {
@@ -36,7 +42,7 @@ const JoinCancle = ({
           progress: undefined,
           theme: "light",
           transition: Bounce,
-        }
+        },
       );
       router.refresh();
     }
@@ -57,17 +63,23 @@ const JoinCancle = ({
           !isEventPassed &&
           (
             document.getElementById(
-              "JoinCancleModal"
+              "JoinCancleModal",
             ) as HTMLDialogElement | null
           )?.showModal()
         }
       >
-        <span>{isEventPassed ? "Event Ended • Attended" : "Joined • Click to Cancel"}</span>
+        <span>
+          {isEventPassed
+            ? "Event Ended • Attended"
+            : "Joined • Click to Cancel"}
+        </span>
       </button>
 
       <dialog id="JoinCancleModal" className="modal backdrop-blur-xs">
         <div className="modal-box bg-white rounded-2xl border border-slate-200/80 p-6 max-w-md shadow-card">
-          <h3 className="font-bold text-lg text-slate-900">Cancel Registration?</h3>
+          <h3 className="font-bold text-lg text-slate-900">
+            Cancel Registration?
+          </h3>
           <p className="py-3 text-sm text-slate-600">
             Are you sure you want to cancel your attendance for{" "}
             <strong className="text-slate-800">
@@ -82,7 +94,7 @@ const JoinCancle = ({
               onClick={() =>
                 (
                   document.getElementById(
-                    "JoinCancleModal"
+                    "JoinCancleModal",
                   ) as HTMLDialogElement | null
                 )?.close()
               }

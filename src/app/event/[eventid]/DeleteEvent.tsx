@@ -1,4 +1,5 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import { EventItem } from "@/type/type";
 import { useRouter } from "next/navigation";
 import { RiDeleteBin2Fill } from "react-icons/ri";
@@ -7,9 +8,18 @@ import { toast, Bounce } from "react-toastify";
 const DeleteEvent = ({ event }: { event: EventItem }) => {
   const router = useRouter();
 
+  
+
   const handleDelete = async () => {
+
+    const {data} = await authClient.token();
+            const token = data?.token;
+
     const res = await fetch(`http://localhost:3200/events/${event._id}`, {
       method: "DELETE",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
     });
 
     if (res.ok) {

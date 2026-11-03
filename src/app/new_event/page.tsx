@@ -63,10 +63,14 @@ const NewEvent = () => {
       }
     }
 
+    const {data} = await authClient.token();
+    const token = data?.token;
+
     const res = await fetch('http://localhost:3200/events', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(eventData),
     });

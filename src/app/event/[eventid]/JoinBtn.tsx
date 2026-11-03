@@ -1,5 +1,6 @@
-'use client';
+"use client";
 
+import { authClient } from "@/lib/auth-client";
 import { EventItem } from "@/type/type";
 import { useRouter } from "next/navigation";
 import { MdArrowForward } from "react-icons/md";
@@ -35,10 +36,13 @@ const JoinBtn = ({
       return;
     }
 
+    const { data } = await authClient.token();
+    const token = data?.token;
     const res = await fetch(`http://localhost:3200/event-joins`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
         joinerdata,

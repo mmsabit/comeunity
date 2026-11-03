@@ -16,18 +16,17 @@ const EventDetailesPage = async ({
 }) => {
   const { eventid } = await params;
   let event: EventItem | null = null;
-  
-  const jwtTokens =await auth.api.getToken({
-    headers: await headers(),
-  })
 
-  
+  const jwtTokens = await auth.api.getToken({
+    headers: await headers(),
+  });
+  const token = jwtTokens?.token;
 
   try {
     const res = await fetch(`http://localhost:3200/events/${eventid}`, {
       cache: "no-store",
       headers: {
-        Authorization: `Bearer ${jwtTokens?.token}`,
+        authorization: `Bearer ${token}`,
       },
     });
     if (res.ok) {
@@ -67,7 +66,10 @@ const EventDetailesPage = async ({
           <div className="relative w-full rounded-3xl overflow-hidden shadow-card border border-slate-200/80 aspect-video sm:aspect-21/9 max-h-115 bg-slate-900">
             <Image
               className="w-full h-full object-cover opacity-90"
-              src={event.thumbnailUrl || "https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=1920&q=80"}
+              src={
+                event.thumbnailUrl ||
+                "https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=1920&q=80"
+              }
               alt={event.eventTitle || "Event banner"}
               fill
               priority
@@ -124,7 +126,9 @@ const EventDetailesPage = async ({
                     </div>
                     <div>
                       <p className="text-xs text-slate-400 font-medium">Date</p>
-                      <p className="font-semibold text-slate-800">{event.eventDate}</p>
+                      <p className="font-semibold text-slate-800">
+                        {event.eventDate}
+                      </p>
                     </div>
                   </li>
                   <li className="flex items-center gap-3 text-sm text-slate-700">
@@ -132,8 +136,12 @@ const EventDetailesPage = async ({
                       <FaLocationDot className="text-base" />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-xs text-slate-400 font-medium">Location</p>
-                      <p className="font-semibold text-slate-800 truncate">{event.eventLocation}</p>
+                      <p className="text-xs text-slate-400 font-medium">
+                        Location
+                      </p>
+                      <p className="font-semibold text-slate-800 truncate">
+                        {event.eventLocation}
+                      </p>
                     </div>
                   </li>
                   <li className="flex items-center gap-3 text-sm text-slate-700">
@@ -147,13 +155,17 @@ const EventDetailesPage = async ({
                       <FaUserGroup className="text-base" />
                     </div>
                     <div>
-                      <p className="text-xs text-slate-400 font-medium">Community Status</p>
+                      <p className="text-xs text-slate-400 font-medium">
+                        Community Status
+                      </p>
                       <p
                         className={`font-semibold ${
                           isEventPassed ? "text-slate-500" : "text-emerald-700"
                         }`}
                       >
-                        {isEventPassed ? "Event Finished" : "Open for Volunteers"}
+                        {isEventPassed
+                          ? "Event Finished"
+                          : "Open for Volunteers"}
                       </p>
                     </div>
                   </li>

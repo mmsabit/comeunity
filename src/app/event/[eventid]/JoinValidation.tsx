@@ -2,6 +2,8 @@ import React from "react";
 import JoinBtn from "./JoinBtn";
 import { EventItem, EventRegistration } from "@/type/type";
 import JoinCancle from "./JoinCancle";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 const JoinValidation = async ({
   event,
@@ -15,8 +17,15 @@ const JoinValidation = async ({
 
   let joinRecord: EventRegistration | null = null;
   if (user) {
+      const jwtTokens = await auth.api.getToken({
+    headers: await headers(),
+  });
+  const token = jwtTokens?.token;
     const res = await fetch(
-      `http://localhost:3200/event-joins/${user.id}/event/${event._id}`,
+      `http://localhost:3200/event-joins/${user.id}/event/${event._id}`,{headers: {
+        authorization: `Bearer ${token}`,
+      }}
+      ,
     );
     if (!res.ok) {
       throw new Error(`Failed to check event registration: ${res.status}`);

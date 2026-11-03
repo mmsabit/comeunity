@@ -7,6 +7,7 @@ import { EventItem } from "@/type/type";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 
 const EditEvent = ({ event }: { event: EventItem }) => {
   const router = useRouter();
@@ -40,10 +41,13 @@ const EditEvent = ({ event }: { event: EventItem }) => {
     setLoading(true);
     setSuccess(false);
 
+    const {data} = await authClient.token();
+        const token = data?.token;
+
     try {
       const res = await fetch(`http://localhost:3200/events/${event._id}`, {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", authorization: `Bearer ${token}`, },
         body: JSON.stringify(formData),
       });
 

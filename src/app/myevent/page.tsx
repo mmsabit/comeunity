@@ -10,10 +10,17 @@ const MyEvent = async () => {
   const userId = session?.user?.id;
 
   let events: EventItem[] = [];
-  if (userId) {
+
+    const jwtTokens = await auth.api.getToken({
+    headers: await headers(),
+  });
+  const token = jwtTokens?.token;
     try {
       const res = await fetch(`http://localhost:3200/myevents/${userId}`, {
         cache: 'no-store',
+        headers: {
+        authorization: `Bearer ${token}`,
+      },
       });
       if (res.ok) {
         events = await res.json();
@@ -21,7 +28,7 @@ const MyEvent = async () => {
     } catch (err) {
       console.error('Failed to load my events:', err);
     }
-  }
+
 
   return (
     <div className="w-full pt-10 pb-20 bg-surface min-h-[calc(100vh-80px)]">
