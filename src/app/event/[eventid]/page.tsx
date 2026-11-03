@@ -17,17 +17,11 @@ const EventDetailesPage = async ({
   const { eventid } = await params;
   let event: EventItem | null = null;
 
-  const jwtTokens = await auth.api.getToken({
-    headers: await headers(),
-  });
-  const token = jwtTokens?.token;
 
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/${eventid}`, {
       cache: "no-store",
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
+      
     });
     if (res.ok) {
       event = await res.json();

@@ -51,7 +51,6 @@ export const config = {
         "/myevents",
         "/joined_event",
         "/joined-events",
-        "/event/:path+",
         "/signin",
         "/signup",
     ],
